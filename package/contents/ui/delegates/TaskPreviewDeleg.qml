@@ -113,7 +113,7 @@ Item{
     }
 
     ListView.onRemove:{
-        previewManager.removeWindowPreview(taskDeleg2.ccode);
+      //  previewManager.removeWindowPreview(taskDeleg2.ccode);
     }
 
     Behavior on height{
@@ -494,7 +494,7 @@ Item{
     ////////////////////////// Functions that provide important functionality/////////////////
 
     function updatePreview(){
-        updatePreviewSignal();
+    /*    updatePreviewSignal();
         if(!overrideUpdatePreview){
 
             if(taskDeleg2.showPreviews)  {
@@ -510,7 +510,7 @@ Item{
             }
             else
                 previewManager.removeWindowPreview(taskDeleg2.ccode);
-        }
+        }*/
     }
 
 

@@ -5,6 +5,7 @@ import org.kde.workflow.components 0.1 as WorkFlowComponents
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
+import org.kde.kwin 0.1;
 
 import "delegates"
 import "delegates/ui-elements"
@@ -19,24 +20,32 @@ import "DynamicAnimations.js" as DynamAnim
 
 import "../code/settings.js" as Settings
 
-Rectangle {
+Item {
     id:mainView
     objectName: "instMainView"
     focus:true
 
-    property int minimumWidth: 100
+    property int screenWidth: 0
+    property int screenHeight: 0
+    property int screenX: 0
+    property int screenY: 0
+
+    width: screenWidth
+    height: screenHeight
+
+    /*   property int minimumWidth: 100
     property int minimumHeight: 100
     property int maximumWidth
     property int maximumHeight
     property int preferredWidth: 500
-    property int preferredHeight: 350
+    property int preferredHeight: 350*/
 
-    property Component compactRepresentationEmpty: undefined
-    property Component compactRepresentationPanel: Component{ CompactRepresentation{} }
+    //  property Component compactRepresentationEmpty: undefined
+    //  property Component compactRepresentationPanel: Component{ CompactRepresentation{} }
 
-    property Component compactRepresentation: plasmoidWrapper.isInPanel ?
-                                                  compactRepresentationPanel :
-                                                  compactRepresentationEmpty
+    //  property Component compactRepresentation: plasmoidWrapper.isInPanel ?
+    //  compactRepresentationPanel :
+    //     compactRepresentationEmpty
 
     Settings {
         id: settings
@@ -44,7 +53,7 @@ Rectangle {
     }
 
     //   color:"#000000ff"
-    color:  Settings.global.disableBackground ? "#00dcdcdc": "#dcdcdc"
+    //   color:  Settings.global.disableBackground ? "#00dcdcdc": "#dcdcdc"
 
     clip:true
     anchors.fill: parent
@@ -80,14 +89,14 @@ Rectangle {
     WorkFlowComponents.TaskManager {
         id: taskManager
     }
-
+    /*
     WorkFlowComponents.PreviewsManager {
         id: previewManager
     }
 
     WorkFlowComponents.PlasmoidWrapper {
         id: plasmoidWrapper
-    }
+    }*/
 
     QMLPluginsConnections{}
 
@@ -140,85 +149,113 @@ Rectangle {
         sourceModel: workflowManager.model()
     }
 
-    Item{
-        id:centralArea
-        anchors.fill: parent
+    PlasmaCore.Dialog {
+        id: dialog
+        visible: false
+        windowFlags: Qt.X11BypassWindowManagerHint
 
-        property string typeId: "centralArea"
+        x: screenX + ((screenWidth/2) - (width/2));
+        y: screenY + ((screenHeight/2) - (height/2));
 
-        WorkAreasAllLists{
-            id: allWorkareas
-            z:4
-
-            /* Should use anchors, but they seem to break the flickable area */
-            //anchors.top: oxygenT.bottom
-            //anchors.bottom: mainView.bottom
-            //anchors.left: mainView.left
-            //anchors.right: mainView.right
-            y:oxygenT.height
-            width:(mAddActivityBtn.showRedCross) ? mainView.width-mAddActivityBtn.width : mainView.width
-            height:mainView.height - y
-            verticalScrollBarLocation: stoppedPanel.x
-            clip:true
-
-            workareaWidth: mainView.workareaWidth
-            workareaHeight: mainView.workareaHeight
-            scale: mainView.scaleMeter
-            animationsStep: Settings.global.animationStep
+        onVisibleChanged: {
+            if(visible){
+                // position might have changed
+                var screen = workspace.clientArea(KWin.ScreenArea, workspace.activeScreen, workspace.currentDesktop);
+                mainView.screenWidth = screen.width;
+                mainView.screenHeight = screen.height;
+                mainView.screenX = screen.x;
+                mainView.screenY = screen.y;
+            }
         }
 
-        StoppedActivitiesPanel{
-            id:stoppedPanel
-            z:6
+        mainItem: Item{
+            id:mainDialogItem
+            width: mainView.screenWidth-1
+            height:mainView.screenHeight-1
+
+            Item{
+                id:centralArea
+                anchors.fill: parent
+
+                property string typeId: "centralArea"
+
+                WorkAreasAllLists{
+                    id: allWorkareas
+                    z:4
+
+                    /* Should use anchors, but they seem to break the flickable area */
+                    //anchors.top: oxygenT.bottom
+                    //anchors.bottom: mainView.bottom
+                    //anchors.left: mainView.left
+                    //anchors.right: mainView.right
+                    y:oxygenT.height
+                    width:(mAddActivityBtn.showRedCross) ? mainDialogItem.width-mAddActivityBtn.width : mainDialogItem.width
+                    height:mainView.height - y
+                    verticalScrollBarLocation: stoppedPanel.x
+                    clip:true
+
+                    workareaWidth: mainView.workareaWidth
+                    workareaHeight: mainView.workareaHeight
+                    scale: mainView.scaleMeter
+                    animationsStep: Settings.global.animationStep
+                }
+
+                StoppedActivitiesPanel{
+                    id:stoppedPanel
+                    z:6
+                }
+
+                MainAddActivityButton{
+                    id: mAddActivityBtn
+                    z:7
+                }
+
+                TitleMainView{
+                    id:oxygenT
+                    z:8
+                }
+
+                AllActivitiesTasks{
+                    id:allActT
+                    z:7
+                }
+
+                ZoomSliderItem{
+                    id:zoomSlider
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 7
+                    anchors.right: parent.right
+                    anchors.rightMargin: 7
+                    z:10
+
+                    onValueChanged: Settings.global.scale = value;
+
+                    Component.onCompleted: value = Settings.global.scale;
+                }
+            }
+
+            FilterWindows{
+                id:filterWindows
+                width:Math.max(0.3*parent.width,250)
+            }
+
+            DraggingInterfaceTasks{
+                id:mDragInt
+            }
+
+            DraggingInterfaceActivities{
+                id:draggingActivities
+            }
+
+            KeyNavigation{
+                id:keyNavigation
+            }
         }
-
-        MainAddActivityButton{
-            id: mAddActivityBtn
-            z:7
-        }
-
-        TitleMainView{
-            id:oxygenT
-            z:8
-        }
-
-        AllActivitiesTasks{
-            id:allActT
-            z:7
-        }
-
-        ZoomSliderItem{
-            id:zoomSlider
-            anchors.bottom: parent.bottom
-            anchors.right: parent.right
-            z:10
-
-            onValueChanged: Settings.global.scale = value;
-
-            Component.onCompleted: value = Settings.global.scale;
-        }
-    }
-
-    FilterWindows{
-        id:filterWindows
-        width:Math.max(0.3*parent.width,250)
-    }
-
-    DraggingInterfaceTasks{
-        id:mDragInt
-    }
-
-    DraggingInterfaceActivities{
-        id:draggingActivities
-    }
-
-    KeyNavigation{
-        id:keyNavigation
     }
 
     Keys.forwardTo: [keyNavigation]
 
-    MouseEventListener {
+    /*   MouseEventListener {
         id:zoomAreaListener
         anchors.fill:parent
         z:keyNavigation.ctrlActive ? 40 : -1
@@ -231,7 +268,7 @@ Rectangle {
             else
                 zoomSlider.value=zoomSlider.value+2;
         }
-    }
+    }*/
 
     Connections{
         target:Settings.global
@@ -244,20 +281,33 @@ Rectangle {
         if(Settings.global.firstRunLiveTour === false)
             getDynLib().showFirstHelpTourDialog();
 
-        var toolTipData = new Object;
-        toolTipData["image"] = "preferences-activities"; // same as in .desktop file
-        toolTipData["mainText"] = i18n("WorkFlow Plasmoid"); // same as in .desktop file
-        toolTipData["subText"] = i18n("Activities, Workareas, Windows organize your \n full workflow through the KDE technologies");
-        plasmoid.popupIconToolTip = toolTipData;
+        //      var toolTipData = new Object;
+        //      toolTipData["image"] = "preferences-activities"; // same as in .desktop file
+        //      toolTipData["mainText"] = i18n("WorkFlow Plasmoid"); // same as in .desktop file
+        //      toolTipData["subText"] = i18n("Activities, Workareas, Windows organize your \n full workflow through the KDE technologies");
+        //     plasmoid.popupIconToolTip = toolTipData;
 
-        plasmoid.popupIcon = QIcon("preferences-activities");
-        plasmoid.aspectRatioMode = IgnoreAspectRatio;
+        //      plasmoid.popupIcon = QIcon("preferences-activities");
+        //      plasmoid.aspectRatioMode = IgnoreAspectRatio;
 
-        plasmoid.addEventListener("ConfigChanged", Settings.global.configChanged);
-        plasmoid.popupEvent.connect(popupEventSlot);
+        //       plasmoid.addEventListener("ConfigChanged", Settings.global.configChanged);
+        //        plasmoid.popupEvent.connect(popupEventSlot);
 
-        plasmoid.passivePopup = !Settings.global.hideOnClick;
+        //      plasmoid.passivePopup = !Settings.global.hideOnClick;
+
+        var screen = workspace.clientArea(KWin.ScreenArea, workspace.activeScreen, workspace.currentDesktop);
+        mainView.screenWidth = screen.width;
+        mainView.screenHeight = screen.height;
+        mainView.screenX = screen.x;
+        mainView.screenY = screen.y;
+
         mainView.forceActiveFocus();
+
+        console.log("I am in script...");
+        registerScreenEdge(KWin.ElectricBottomRight, function () {
+            dialog.visible = !dialog.visible;
+            print("Screen Edge activated");
+        });
 
     }
 
@@ -399,9 +449,29 @@ Rectangle {
         }
     }
 
-   // CalibrationDialogTmpl{}
-  //      TourDialog{
-  //  }
+    // CalibrationDialogTmpl{}
+    //      TourDialog{
+    //  }
 
+    /*   Timer {
+        id: timer
+        repeat: false
+        interval: 5000
+        onTriggered: dialog.visible = false
+    }
+
+    Connections {
+        target: workspace
+        onCurrentDesktopChanged: {
+            timer.start();
+            dialog.visible = true;
+        }
+    }*/
+
+
+    Connections {
+        target: options
+        onConfigChanged: Settings.global.configChanged();
+    }
 }
 

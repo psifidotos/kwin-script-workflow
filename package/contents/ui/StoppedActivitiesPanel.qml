@@ -18,7 +18,7 @@ Rectangle {
     property bool showAddButton: !Settings.global.lockActivities
 
     x:((stoppedActivitiesList.shownActivities > 0)&&( !doNotShow)) ?
-          mainView.width - width : mainView.width - 2
+          parent.width - width : parent.width - 2
     //y:oxygenT.height
 
     y:((!Settings.global.lockActivities && !hiddenList) ||

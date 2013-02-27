@@ -8,9 +8,9 @@ import "../../code/dragginghelpers.js" as Helper
 
 Rectangle{
     id:mainDraggingItem
-    anchors.fill: mainView
+    anchors.fill: parent
 
-    color:"#05000000"
+    color:"#10000000"
     opacity:0
     z:-1
 
@@ -228,7 +228,7 @@ Rectangle{
             }
 
             if(Settings.global.animationStep2!==0){
-                var co1 = mainView.mapToItem(mainView, iconImg.x, iconImg.y);
+                var co1 = mapToItem(parent, iconImg.x, iconImg.y);
                 mainView.getDynLib().animateEverywhereToActivity(mainDraggingItem.intTaskId,
                                                                  co1,
                                                                  2);
@@ -244,8 +244,8 @@ Rectangle{
         taskManager.setTaskState(mainDraggingItem.intTaskId,"oneDesktop", drActiv, drDesktop);
 
         if(Settings.global.animationStep2!==0){
-            var co14 = mainView.mapToItem(mainView, iconImg.x, iconImg.y);
-            var toCol4 = mainView.mapToItem(mainView,co14.x - 65,co14.y);
+            var co14 = mapToItem(parent, iconImg.x, iconImg.y);
+            var toCol4 = mapToItem(parent,co14.x - 65,co14.y);
 
             mainView.getDynLib().animateEverywhereToXY(mainDraggingItem.intTaskId,
                                                        co14,
@@ -258,7 +258,7 @@ Rectangle{
         taskManager.setTaskState(mainDraggingItem.intTaskId,"allActivities");
 
         if(Settings.global.animationStep2!==0){
-            var co13 = mainView.mapToItem(mainView, iconImg.x, iconImg.y);
+            var co13 = parent.mapToItem(parent, iconImg.x, iconImg.y);
             mainView.getDynLib().animateDesktopToEverywhere(mainDraggingItem.intTaskId,
                                                             co13,
                                                             2);

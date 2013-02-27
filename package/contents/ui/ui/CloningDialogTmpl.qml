@@ -6,7 +6,7 @@ import org.kde.qtextracomponents 0.1
 
 DialogTemplate2{
     id:clonDialog
-    anchors.centerIn: mainView
+  //  anchors.centerIn: mainView
     property string activityCode
     property string activityName
 
@@ -57,6 +57,6 @@ DialogTemplate2{
             completed();
             ///
         }
-    }
+    }   
 }
 

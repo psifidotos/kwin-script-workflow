@@ -13,7 +13,7 @@ Rectangle{
     height: showRedCross===true ? allWorkareas.actImagHeight : allWorkareas.actImagHeight / 2
 
     property int marginRight: showRedCross ? 0 : 7
-    x:mainView.width - width - marginRight
+    x:parent.width - width - marginRight
     color: "#00ffffff"
 
     y:oxygenT.height

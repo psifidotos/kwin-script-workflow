@@ -2,24 +2,24 @@ import QtQuick 1.1
 import "../code/settings.js" as Settings
 
 QtObject {
-    property bool lockActivities: plasmoid.readConfig("LockActivities")
-    property bool showWindows: plasmoid.readConfig("ShowWindows")
-    property int scale: plasmoid.readConfig("Scale")
-    property int animations: plasmoid.readConfig("Animations")
-    property int animationSpeed: plasmoid.readConfig("AnimationSpeed")
+    property bool lockActivities: readConfig("LockActivities", true)
+    property bool showWindows: readConfig("ShowWindows", true)
+    property int scale: readConfig("Scale", 50)
+    property int animations: readConfig("Animations", 1)
+    property int animationSpeed: readConfig("AnimationSpeed", 200)
     property int animationStep: animations >= 1 ? animationSpeed:0
     property int animationStep2: animations >= 2 ? animationSpeed:0
-    property bool windowPreviews: plasmoid.readConfig("WindowPreviews")
-    property int windowPreviewsOffsetX: plasmoid.readConfig("WindowPreviewsOffsetX")
-    property int windowPreviewsOffsetY: plasmoid.readConfig("WindowPreviewsOffsetY")
-    property int fontRelevance: plasmoid.readConfig("FontRelevance")
-    property bool showStoppedPanel: plasmoid.readConfig("ShowStoppedPanel")
-    property bool firstRunTour: plasmoid.readConfig("FirstRunTour")
-    property bool firstRunCalibration: plasmoid.readConfig("FirstRunCalibration")
-    property bool hideOnClick: plasmoid.readConfig("HideOnClick")
-    property bool useCurrentActivityIcon: plasmoid.readConfig("UseCurrentActivityIcon")
-    property bool disableEverywherePanel: plasmoid.readConfig("DisableEverywherePanel")
-    property bool disableBackground: plasmoid.readConfig("DisableBackground")
+    property bool windowPreviews: readConfig("WindowPreviews", false)
+    property int windowPreviewsOffsetX: readConfig("WindowPreviewsOffsetX", 0)
+    property int windowPreviewsOffsetY: readConfig("WindowPreviewsOffsetY", 0)
+    property int fontRelevance: readConfig("FontRelevance", 0)
+    property bool showStoppedPanel: readConfig("ShowStoppedPanel", true)
+    property bool firstRunTour: readConfig("FirstRunTour", false)
+    property bool firstRunCalibration: readConfig("FirstRunCalibration", false)
+    property bool hideOnClick: readConfig("HideOnClick", false)
+    property bool useCurrentActivityIcon: readConfig("UseCurrentActivityIcon", false)
+    property bool disableEverywherePanel: readConfig("DisableEverywherePanel", false)
+    property bool disableBackground: readConfig("DisableBackground", false)
 
 
     // Small hack to make sure the global settings object is set
@@ -29,30 +29,30 @@ QtObject {
             Settings.global = settings
     }
     
-    onLockActivitiesChanged: { plasmoid.writeConfig("LockActivities", lockActivities); }
-    onShowWindowsChanged: { plasmoid.writeConfig("ShowWindows", showWindows) ; }
-    onScaleChanged: { plasmoid.writeConfig("Scale", scale) ; }
-    onAnimationsChanged: { plasmoid.writeConfig("Animations", animations) ; }
-    onAnimationSpeedChanged: { plasmoid.writeConfig("AnimationSpeed", animationSpeed) ; }
-    onWindowPreviewsChanged: { plasmoid.writeConfig("WindowPreviews", windowPreviews) ; }
-    onWindowPreviewsOffsetXChanged: { plasmoid.writeConfig("WindowPreviewsOffsetX", windowPreviewsOffsetX) ; }
-    onWindowPreviewsOffsetYChanged: { plasmoid.writeConfig("WindowPreviewsOffsetY", windowPreviewsOffsetY) ; }
-    onFontRelevanceChanged: { plasmoid.writeConfig("FontRelevance", fontRelevance) ; }
-    onShowStoppedPanelChanged: { plasmoid.writeConfig("ShowStoppedPanel", showStoppedPanel) ; }
-    onFirstRunTourChanged: { plasmoid.writeConfig("FirstRunTour", firstRunTour) ; }
-    onFirstRunCalibrationChanged: { plasmoid.writeConfig("FirstRunCalibration", firstRunCalibration) ; }
-    onHideOnClickChanged: { plasmoid.writeConfig("HideOnClick", hideOnClick) ; }
-    onUseCurrentActivityIconChanged: { plasmoid.writeConfig("UseCurrentActivityIcon", useCurrentActivityIcon) ; }
-    onDisableEverywherePanelChanged: { plasmoid.writeConfig("DisableEverywherePanel", disableEverywherePanel) ; }
-    onDisableBackgroundChanged: { plasmoid.writeConfig("DisableBackground", disableBackground) ; }
-    
+ /*   onLockActivitiesChanged: { writeConfig("LockActivities", lockActivities); }
+    onShowWindowsChanged: { writeConfig("ShowWindows", showWindows) ; }
+    onScaleChanged: { writeConfig("Scale", scale) ; }
+    onAnimationsChanged: { writeConfig("Animations", animations) ; }
+    onAnimationSpeedChanged: { writeConfig("AnimationSpeed", animationSpeed) ; }
+    onWindowPreviewsChanged: { writeConfig("WindowPreviews", windowPreviews) ; }
+    onWindowPreviewsOffsetXChanged: { writeConfig("WindowPreviewsOffsetX", windowPreviewsOffsetX) ; }
+    onWindowPreviewsOffsetYChanged: { writeConfig("WindowPreviewsOffsetY", windowPreviewsOffsetY) ; }
+    onFontRelevanceChanged: { writeConfig("FontRelevance", fontRelevance) ; }
+    onShowStoppedPanelChanged: { writeConfig("ShowStoppedPanel", showStoppedPanel) ; }
+    onFirstRunTourChanged: { writeConfig("FirstRunTour", firstRunTour) ; }
+    onFirstRunCalibrationChanged: { writeConfig("FirstRunCalibration", firstRunCalibration) ; }
+    onHideOnClickChanged: { writeConfig("HideOnClick", hideOnClick) ; }
+    onUseCurrentActivityIconChanged: { writeConfig("UseCurrentActivityIcon", useCurrentActivityIcon) ; }
+    onDisableEverywherePanelChanged: { writeConfig("DisableEverywherePanel", disableEverywherePanel) ; }
+    onDisableBackgroundChanged: { writeConfig("DisableBackground", disableBackground) ; }
+   */
 
     function configChanged() {
-        hideOnClick = plasmoid.readConfig("HideOnClick");
-        animations = plasmoid.readConfig("Animations");
-        useCurrentActivityIcon = plasmoid.readConfig("UseCurrentActivityIcon");
-        disableEverywherePanel = plasmoid.readConfig("DisableEverywherePanel");
-        disableBackground = plasmoid.readConfig("DisableBackground");
+        hideOnClick = readConfig("HideOnClick", false);
+        animations = readConfig("Animations", 1);
+        useCurrentActivityIcon = readConfig("UseCurrentActivityIcon", false);
+        disableEverywherePanel = readConfig("DisableEverywherePanel", false);
+        disableBackground = readConfig("DisableBackground", false);
     }
 
     Component.onCompleted: {

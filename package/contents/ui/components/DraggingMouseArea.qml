@@ -42,7 +42,7 @@ MouseArea {
 
         if(outOfInnerLimits(mouse)&&(tempPressed)){
             previousParent = parent;
-            parent = mainView;
+            parent = mainDialogItem;
             draggingStarted(mouse);
             tempPressed = false;
             isPressed = true;
@@ -70,7 +70,7 @@ MouseArea {
     function draggingMovementActions(mouse){
         draggingMovement(mouse)
         if( draggingInterface !== null){
-            var nCor = mapToItem(mainView,mouse.x,mouse.y);
+            var nCor = mapToItem(mainDialogItem,mouse.x,mouse.y);
             draggingInterface.onPstChanged(nCor);
         }
     }

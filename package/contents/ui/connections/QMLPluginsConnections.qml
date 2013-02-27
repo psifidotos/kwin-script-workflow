@@ -8,6 +8,6 @@ Item{
     ActivityManagerConnections{}
     WorkareaManagerConnections{}
     TaskManagerConnections{}
-    PreviewManagerConnections{}
-    PlasmoidWrapperConnections{}
+  //  PreviewManagerConnections{}
+  //  PlasmoidWrapperConnections{}
 }

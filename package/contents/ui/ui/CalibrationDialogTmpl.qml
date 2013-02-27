@@ -13,7 +13,7 @@ import org.kde.qtextracomponents 0.1
 DialogTemplate2{
     id:calibDialog
 
-    anchors.centerIn: mainView
+ //   anchors.centerIn: mainView
 
     insideWidth: 0.7*mainView.width
     insideHeight: 0.6*mainView.height

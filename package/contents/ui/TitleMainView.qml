@@ -14,7 +14,7 @@ PlasmaComponents.ToolBar {
 //Rectangle{
     id:oxygenTitle
     anchors.top:parent.top
-    width:mainView.width
+    width:parent.width
 //    color:"#dcdcdc"
     height: workareaY/3
 
@@ -263,11 +263,14 @@ PlasmaComponents.ToolBar {
 
     }// End Of Left Set of Buttons // Row
 
+
+
     IconButton{
         id:helpBtn
 
         opacity:1
-        anchors.right: parent.right
+        anchors.right: quitBtn.left
+        anchors.rightMargin: 5
         anchors.verticalCenter: parent.verticalCenter
 
         width: 0.65*oxygenTitle.buttonWidth
@@ -279,7 +282,25 @@ PlasmaComponents.ToolBar {
         tooltipText: i18n("This dialog contains information about the application but you can also find \"Help Tour\" and \"Report Bug\" choices.")
 
         onClicked: {
+            console.log("I am here....");
             mainView.getDynLib().showAboutDialog();
+        }
+    }
+
+    IconButton{
+        id:quitBtn
+
+        opacity:1
+        anchors.right: parent.right
+        anchors.verticalCenter: parent.verticalCenter
+
+        width: 0.65*oxygenTitle.buttonWidth
+        height: 0.75*oxygenTitle.buttonHeight
+        opacityAnimation: true
+        icon: "edit-delete"
+
+        onClicked: {
+            dialog.visible = !dialog.visible;
         }
     }
 

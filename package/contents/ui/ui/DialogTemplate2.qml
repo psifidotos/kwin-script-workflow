@@ -15,7 +15,7 @@ PlasmaCore.FrameSvgItem{
 
     /*property alias insideWidth: dialogInsideRect.width
     property alias insideHeight: dialogInsideRect.height*/
-
+    anchors.centerIn:parent
     property int insideWidth: 200
     property int insideHeight: 200
     property int spaceX:10

@@ -1,5 +1,5 @@
 # Project Needs a name ofcourse
-project(plasma_applet_workflow)
+project(kwin_script_workflow)
 
 set(NAME workflow)
 set(VERSION 0.3.0)
@@ -22,7 +22,7 @@ include_directories(
    ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-add_subdirectory(components)
+# add_subdirectory(components)
 add_subdirectory(package)
-add_subdirectory(dataengines)
-add_subdirectory(po)
+# add_subdirectory(dataengines)
+# add_subdirectory(po)

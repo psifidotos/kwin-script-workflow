@@ -10,7 +10,7 @@ Item{
     id:allActTasksPanel
 
     //anchors.bottom: mainView.bottom
-    y:mainView.height-height
+    y:parent.height-height
     width:(allActTaskL.shownTasks+0.4) * allActRect.taskWidth
     height:allActRectShad.height+allActRect.height
 

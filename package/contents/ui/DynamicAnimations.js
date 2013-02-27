@@ -17,7 +17,7 @@ function createComponents(){
 function showRemoveDialog(actId,actName){
     var rmvDialog = Qt.createComponent("ui/RemoveDialogTmpl.qml");
 
-    mainView.removeDialog = rmvDialog.createObject(mainView);
+    mainView.removeDialog = rmvDialog.createObject(mainDialogItem);
 
     mainView.removeDialog.activityCode = actId;
     mainView.removeDialog.activityName = actName;
@@ -34,7 +34,7 @@ function deleteRemoveDialog(){
 function showCloneDialog(actId,actName){
     var clnDialog = Qt.createComponent("ui/CloningDialogTmpl.qml");
 
-    mainView.cloningDialog = clnDialog.createObject(mainView);
+    mainView.cloningDialog = clnDialog.createObject(mainDialogItem);
 
     mainView.cloningDialog.activityCode = actId;
     mainView.cloningDialog.activityName = actName;
@@ -52,7 +52,7 @@ function deleteCloneDialog(){
 function showCalibrationDialog(){
     var clbDialog = Qt.createComponent("ui/CalibrationDialogTmpl.qml");
 
-    mainView.calibrationDialog = clbDialog.createObject(mainView);
+    mainView.calibrationDialog = clbDialog.createObject(mainDialogItem);
     mainView.calibrationDialog.defColor = theme.textColor;
 
     mainView.calibrationDialog.openD();
@@ -66,7 +66,7 @@ function deleteCalibrationDialog(){
 function showDesktopDialog(actId,desk){
     var dskDialog = Qt.createComponent("ui/DesktopDialogTmpl.qml");
 
-    mainView.desktopDialog = dskDialog.createObject(mainView);
+    mainView.desktopDialog = dskDialog.createObject(mainDialogItem);
     mainView.desktopDialog.disablePreviews = mainView.disablePreviewsWasForcedInDesktopDialog;
     mainView.desktopDialog.defColor = theme.textColor;
 
@@ -82,7 +82,7 @@ function deleteDesktopDialog(){
 function showBusyIndicatorDialog(){
     var bsDialog = Qt.createComponent("ui/BusyIndicatorDialogTmpl.qml");
 
-    mainView.busyIndicatorDialog = bsDialog.createObject(mainView);
+    mainView.busyIndicatorDialog = bsDialog.createObject(mainDialogItem);
 
     mainView.busyIndicatorDialog.startAnimation();
 }
@@ -95,7 +95,7 @@ function deleteBusyIndicatorDialog(){
 function showLiveTourDialog(){
     var lvDialog = Qt.createComponent("helptour/TourDialog.qml");
 
-    mainView.liveTourDialog = lvDialog.createObject(mainView);
+    mainView.liveTourDialog = lvDialog.createObject(mainDialogItem);
     mainView.liveTourDialog.defColor = theme.textColor;
 
     mainView.liveTourDialog.openD();
@@ -112,7 +112,7 @@ function deleteLiveTourDialog(){
 function showAboutDialog(){
     var abDialog = Qt.createComponent("ui/AboutDialogTmpl.qml");
 
-    mainView.aboutDialog = abDialog.createObject(mainView);
+    mainView.aboutDialog = abDialog.createObject(mainDialogItem);
     mainView.aboutDialog.defColor = theme.textColor;
 
     mainView.aboutDialog.openD();
@@ -128,7 +128,7 @@ function deleteAboutDialog(){
 function showFirstHelpTourDialog(){
     var dialog = Qt.createComponent("ui/FirstRunHelpTourTmpl.qml");
 
-    mainView.firstHelpTourDialog = dialog.createObject(mainView);
+    mainView.firstHelpTourDialog = dialog.createObject(mainDialogItem);
     mainView.firstHelpTourDialog.defColor = theme.textColor;
 
     mainView.firstHelpTourDialog.open();
@@ -142,7 +142,7 @@ function deleteFirstHelpTourDialog(){
 function showFirstCalibrationDialog(){
     var dialog = Qt.createComponent("ui/FirstRunCalibrationTmpl.qml");
 
-    mainView.firstCalibrationDialog = dialog.createObject(mainView);
+    mainView.firstCalibrationDialog = dialog.createObject(mainDialogItem);
     mainView.firstCalibrationDialog.defColor = theme.textColor;
 
     mainView.firstCalibrationDialog.open();
@@ -157,7 +157,7 @@ function deleteFirstCalibrationDialog(){
 
 function animateStoppedToActive(cod, coord){
 
-    var newObject = activityAnimComp.createObject(mainView);
+    var newObject = activityAnimComp.createObject(mainDialogItem);
 
     newObject.animateActivity(cod,coord,allWorkareas.getList());
 
@@ -165,7 +165,7 @@ function animateStoppedToActive(cod, coord){
 }
 
 function animateActiveToStop(cod, coord){
-    var newObject = activityAnimComp.createObject(mainView);
+    var newObject = activityAnimComp.createObject(mainDialogItem);
 
     newObject.animateActivity(cod,coord,stoppedPanel.getList());
 
@@ -173,7 +173,7 @@ function animateActiveToStop(cod, coord){
 }
 
 function getActivityCoord(cod,lst){
-    var newObject = activityAnimComp.createObject(mainView);
+    var newObject = activityAnimComp.createObject(mainDialogItem);
     var res = newObject.getActivityCoord(cod,lst);
     newObject.destroy();
 
@@ -183,7 +183,7 @@ function getActivityCoord(cod,lst){
 //Tasks Animations
 
 function animateDesktopToEverywhere(cid, coord, anim){
-    var newObject = taskAnimComp.createObject(mainView);
+    var newObject = taskAnimComp.createObject(mainDialogItem);
 
     newObject.animateDesktopToEverywhere(cid, coord, anim);
 
@@ -191,7 +191,7 @@ function animateDesktopToEverywhere(cid, coord, anim){
 }
 
 function animateEverywhereToActivity(cid, coord, anim){
-    var newObject = taskAnimComp.createObject(mainView);
+    var newObject = taskAnimComp.createObject(mainDialogItem);
 
     newObject.animateEverywhereToActivity(cid, coord, anim);
 
@@ -200,7 +200,7 @@ function animateEverywhereToActivity(cid, coord, anim){
 
 //General Animations
 function animateEverywhereToXY(cid, coord1, coord2, anim){
-    var newObject = taskAnimComp.createObject(mainView);
+    var newObject = taskAnimComp.createObject(mainDialogItem);
 
     newObject.animateEverywhereToXY(cid, coord1, coord2, anim);
 
@@ -209,7 +209,7 @@ function animateEverywhereToXY(cid, coord1, coord2, anim){
 
 //Button Animations
 function animateIcon(pth,rt,wdth,coord){
-    var newObject = btnAnimComp.createObject(mainView);
+    var newObject = btnAnimComp.createObject(mainDialogItem);
 
     newObject.animateIcon(pth,rt,wdth,coord);
 
