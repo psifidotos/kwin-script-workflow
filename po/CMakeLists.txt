@@ -7,7 +7,7 @@ if(NOT GETTEXT_MSGFMT_EXECUTABLE)
 ------")
 else(NOT GETTEXT_MSGFMT_EXECUTABLE)
 
-	set(catalogname plasma_applet_workflow)
+	set(catalogname kwin_script_workflow)
 	add_custom_target(translations ALL)
 
 	file(GLOB PO_FILES

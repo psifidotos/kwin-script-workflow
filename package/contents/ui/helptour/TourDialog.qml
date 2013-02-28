@@ -15,7 +15,7 @@ DialogTemplate2 {
     //height:mainView.height
 
     //color: "#ca151515"
-    anchors.centerIn: mainView
+    anchors.centerIn: parent
 
 
     //insideWidth: mainView.width-5*margins.left-5*margins.right

@@ -9,6 +9,7 @@ import "../../code/settings.js" as Settings
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.plasma.components 0.1 as PlasmaComponents
 import org.kde.qtextracomponents 0.1
+import org.kde.kwin 0.1 as KWin
 
 DialogTemplate2{
     id:calibDialog
@@ -86,14 +87,9 @@ DialogTemplate2{
                 property bool onlyState1: true
 
                 property string prevWin: ""
-                property string selectedWin:""
+                property string selectedWin: "0"
 
                 onSelectedWinChanged: {
-                    if (calibsTasksList.prevWin !== "")
-                        previewManager.removeWindowPreview(calibsTasksList.prevWin);
-
-                    calibDialog.updatePreview();
-
                     calibsTasksList.prevWin = calibsTasksList.selectedWin;
                 }
 
@@ -228,6 +224,15 @@ DialogTemplate2{
                     id:hiddenRectangle //for Dragging
                     width:parent.width
                     height:parent.height
+
+                    KWin.ThumbnailItem{
+                        wId: calibsTasksList.selectedWin
+                        x:xOffsetSlider.value
+                        y:yOffsetSlider.value
+                        width: parent.width
+                        height: parent.height
+                        parentWindow: dialog.windowId
+                    }
                 }
                 DraggingMouseArea{
                     id:dragArea
@@ -290,9 +295,6 @@ DialogTemplate2{
 
                 text:"X:" +val
 
-                onValChanged:{
-                    calibDialog.updatePreview();
-                }
 
                 y:fRightRow.y-10
 
@@ -387,10 +389,6 @@ DialogTemplate2{
                 property int val:0
 
                 text:"Y:" +val
-
-                onValChanged:{
-                    calibDialog.updatePreview();
-                }
 
                 y:sRightRow.y-10
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -499,37 +497,6 @@ DialogTemplate2{
         }
     }
 
-    PlasmaComponents.Button{
-        id:nextWIdButton
-        anchors.right: rightColumn.right
-        anchors.top: rightColumn.top
-        anchors.topMargin:5
-        anchors.rightMargin: 5
-        iconSource: "view-refresh"
-        visible:plasmoidWrapper.isInPanel
-        onClicked:{
-            previewManager.removeWindowPreview(calibsTasksList.selectedWin);
-            plasmoidWrapper.nextWId();
-            updatePreview();
-            widPosition.text = plasmoidWrapper.currentWIdPosition();
-        }
-    }
-
-    PlasmaCore.ToolTip{
-        mainText: i18n("Refresh Window Previews")
-        subText: i18n("Refresh Window Previews until you see one.")
-        target: nextWIdButton
-        image: "view-refresh"
-    }
-
-    PlasmaComponents.Label{
-        id: widPosition
-        anchors.right: nextWIdButton.left
-        anchors.rightMargin:5
-        anchors.top: nextWIdButton.top
-        opacity:0.5
-        visible:plasmoidWrapper.isInPanel
-    }
 
     function getTasksList(){
         return calibsTasksList
@@ -552,23 +519,6 @@ DialogTemplate2{
         if (calibsTasksList.model.count>0){
             var obj = calibsTasksList.model.get(0);
             setSelectedWindow(obj.code);
-        }
-
-        widPosition.text = plasmoidWrapper.currentWIdPosition();
-    }
-
-    function updatePreview(){
-        if (calibsTasksList.selectedWin !== ""){
-
-            var x1 = 0;
-            var y1 = 0;
-            var obj = tasksPreviewRect.mapToItem(mainView,x1,y1);
-
-            previewManager.setWindowPreview(calibsTasksList.selectedWin,
-                                         obj.x+xValueText.val,
-                                         obj.y+yValueText.val,
-                                         tasksPreviewRect.width-(2*tasksPreviewRect.border.width),
-                                         tasksPreviewRect.height-(2*tasksPreviewRect.border.width));
         }
     }
 

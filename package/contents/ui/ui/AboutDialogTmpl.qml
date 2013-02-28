@@ -64,7 +64,7 @@ DialogTemplate2{
 
         AnimatedText{
             id:versionText
-            fullText:i18n("Plasmoid Version:")+" <i>"+plasmoidWrapper.version+"</i>"
+            fullText:i18n("Plasmoid Version:")+" <i>"+"0.3.0"+"</i>"
 
             font.pixelSize: smallFont
             font.bold: true

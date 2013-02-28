@@ -234,8 +234,8 @@ PlasmaComponents.ToolBar {
                                 Settings.global.firstRunCalibrationPreviews = true;
                             }
 
-                            if(previewManager.mainWindowIdisSet() === false)
-                                previewManager.updatePopWindowWId();
+                      //      if(previewManager.mainWindowIdisSet() === false)
+                          //      previewManager.updatePopWindowWId();
 
                         }
                     }

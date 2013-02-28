@@ -5,11 +5,11 @@ QtObject {
     property bool lockActivities: readConfig("LockActivities", true)
     property bool showWindows: readConfig("ShowWindows", true)
     property int scale: readConfig("Scale", 50)
-    property int animations: readConfig("Animations", 1)
+    property int animations: readConfig("Animations", 2);
     property int animationSpeed: readConfig("AnimationSpeed", 200)
     property int animationStep: animations >= 1 ? animationSpeed:0
     property int animationStep2: animations >= 2 ? animationSpeed:0
-    property bool windowPreviews: readConfig("WindowPreviews", false)
+    property bool windowPreviews: readConfig("WindowPreviews", true)
     property int windowPreviewsOffsetX: readConfig("WindowPreviewsOffsetX", 0)
     property int windowPreviewsOffsetY: readConfig("WindowPreviewsOffsetY", 0)
     property int fontRelevance: readConfig("FontRelevance", 0)
@@ -19,7 +19,7 @@ QtObject {
     property bool hideOnClick: readConfig("HideOnClick", false)
     property bool useCurrentActivityIcon: readConfig("UseCurrentActivityIcon", false)
     property bool disableEverywherePanel: readConfig("DisableEverywherePanel", false)
-    property bool disableBackground: readConfig("DisableBackground", false)
+    property bool disableBackground: readConfig("DisableBackground", true)
 
 
     // Small hack to make sure the global settings object is set

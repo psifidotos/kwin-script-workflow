@@ -33,29 +33,11 @@ Item {
     width: screenWidth
     height: screenHeight
 
-    /*   property int minimumWidth: 100
-    property int minimumHeight: 100
-    property int maximumWidth
-    property int maximumHeight
-    property int preferredWidth: 500
-    property int preferredHeight: 350*/
-
-    //  property Component compactRepresentationEmpty: undefined
-    //  property Component compactRepresentationPanel: Component{ CompactRepresentation{} }
-
-    //  property Component compactRepresentation: plasmoidWrapper.isInPanel ?
-    //  compactRepresentationPanel :
-    //     compactRepresentationEmpty
-
     Settings {
         id: settings
         setAsGlobal: true
     }
 
-    //   color:"#000000ff"
-    //   color:  Settings.global.disableBackground ? "#00dcdcdc": "#dcdcdc"
-
-    clip:true
     anchors.fill: parent
 
     property int scaleMeter: zoomSlider.value
@@ -69,14 +51,6 @@ Item {
     //Applications properties/////
     property bool disablePreviewsWasForcedInDesktopDialog:false //as a reference to DesktopDialog because it is dynamic from now one
 
-    //these signals remove the warnings when running the plasmoid
-    signal minimumWidthChanged;
-    signal minimumHeightChanged;
-    signal maximumWidthChanged;
-    signal maximumHeightChanged;
-    signal preferredWidthChanged;
-    signal preferredHeightChanged;
-
     WorkFlowComponents.SessionParameters {
         id: sessionParameters
         objectName:"sessionParameters"
@@ -89,14 +63,10 @@ Item {
     WorkFlowComponents.TaskManager {
         id: taskManager
     }
-    /*
+
     WorkFlowComponents.PreviewsManager {
         id: previewManager
     }
-
-    WorkFlowComponents.PlasmoidWrapper {
-        id: plasmoidWrapper
-    }*/
 
     QMLPluginsConnections{}
 
@@ -170,8 +140,8 @@ Item {
 
         mainItem: Item{
             id:mainDialogItem
-            width: mainView.screenWidth-1
-            height:mainView.screenHeight-1
+            width: mainView.width-1
+            height:mainView.height-1
 
             Item{
                 id:centralArea
@@ -183,11 +153,6 @@ Item {
                     id: allWorkareas
                     z:4
 
-                    /* Should use anchors, but they seem to break the flickable area */
-                    //anchors.top: oxygenT.bottom
-                    //anchors.bottom: mainView.bottom
-                    //anchors.left: mainView.left
-                    //anchors.right: mainView.right
                     y:oxygenT.height
                     width:(mAddActivityBtn.showRedCross) ? mainDialogItem.width-mAddActivityBtn.width : mainDialogItem.width
                     height:mainView.height - y
@@ -255,7 +220,7 @@ Item {
 
     Keys.forwardTo: [keyNavigation]
 
-    /*   MouseEventListener {
+    MouseEventListener {
         id:zoomAreaListener
         anchors.fill:parent
         z:keyNavigation.ctrlActive ? 40 : -1
@@ -268,32 +233,14 @@ Item {
             else
                 zoomSlider.value=zoomSlider.value+2;
         }
-    }*/
-
-    Connections{
-        target:Settings.global
-        onHideOnClickChanged: plasmoid.passivePopup = !Settings.global.hideOnClick;
     }
+
 
     Component.onCompleted:{
         DynamAnim.createComponents();
 
         if(Settings.global.firstRunLiveTour === false)
             getDynLib().showFirstHelpTourDialog();
-
-        //      var toolTipData = new Object;
-        //      toolTipData["image"] = "preferences-activities"; // same as in .desktop file
-        //      toolTipData["mainText"] = i18n("WorkFlow Plasmoid"); // same as in .desktop file
-        //      toolTipData["subText"] = i18n("Activities, Workareas, Windows organize your \n full workflow through the KDE technologies");
-        //     plasmoid.popupIconToolTip = toolTipData;
-
-        //      plasmoid.popupIcon = QIcon("preferences-activities");
-        //      plasmoid.aspectRatioMode = IgnoreAspectRatio;
-
-        //       plasmoid.addEventListener("ConfigChanged", Settings.global.configChanged);
-        //        plasmoid.popupEvent.connect(popupEventSlot);
-
-        //      plasmoid.passivePopup = !Settings.global.hideOnClick;
 
         var screen = workspace.clientArea(KWin.ScreenArea, workspace.activeScreen, workspace.currentDesktop);
         mainView.screenWidth = screen.width;
@@ -311,12 +258,6 @@ Item {
 
     }
 
-    function popupEventSlot(show){
-        if(show)
-            mainView.forceActiveFocus();
-        else
-            plasmoidWrapper.popupEventSlot(show);
-    }
 
     function getDynLib(){
         return DynamAnim;
@@ -452,22 +393,6 @@ Item {
     // CalibrationDialogTmpl{}
     //      TourDialog{
     //  }
-
-    /*   Timer {
-        id: timer
-        repeat: false
-        interval: 5000
-        onTriggered: dialog.visible = false
-    }
-
-    Connections {
-        target: workspace
-        onCurrentDesktopChanged: {
-            timer.start();
-            dialog.visible = true;
-        }
-    }*/
-
 
     Connections {
         target: options

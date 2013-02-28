@@ -9,6 +9,7 @@ import "../../code/settings.js" as Settings
 
 import org.kde.plasma.core 0.1 as PlasmaCore
 import org.kde.qtextracomponents 0.1
+import org.kde.kwin 0.1 as KWin
 
 Item{
     id: taskDeleg2
@@ -89,32 +90,6 @@ Item{
     signal clickedSignal(variant mouse);
     signal informStateSignal(string nextstate);
 
-    onShowPreviewsChanged:{
-        updatePreview();
-    }
-
-    onWidthChanged: {
-        if(state === state2)
-            updatePreview();
-    }
-
-    onHeightChanged: {
-        if(state === state2)
-            updatePreview();
-    }
-
-    Component.onCompleted: {
-        taskDeleg2.updatePreview();
-    }
-
-    ListView.onAdd: {
-        if (showPreviews === true)
-            taskDeleg2.updatePreview();
-    }
-
-    ListView.onRemove:{
-      //  previewManager.removeWindowPreview(taskDeleg2.ccode);
-    }
 
     Behavior on height{
         NumberAnimation {
@@ -209,18 +184,13 @@ Item{
 
             opacity: 0.6
         }
-
-        onWidthChanged: {
-            taskDeleg2.updatePreview();
-        }
-        onHeightChanged: {
-            taskDeleg2.updatePreview();
-        }
-        onXChanged: {
-            taskDeleg2.updatePreview();
-        }
-        onYChanged: {
-            taskDeleg2.updatePreview();
+        KWin.ThumbnailItem{
+            wId: taskDeleg2.ccode
+            width: parent.width
+            height: parent.height
+            parentWindow: dialog.windowId
+            clip: true
+            visible:taskDeleg2.showPreviews
         }
 
         DraggingMouseArea {
@@ -240,9 +210,6 @@ Item{
         }
     }
 
-    onXChanged: {
-        taskDeleg2.updatePreview();
-    }
 
     ////Preview State///////////
 
@@ -492,26 +459,6 @@ Item{
     }
 
     ////////////////////////// Functions that provide important functionality/////////////////
-
-    function updatePreview(){
-    /*    updatePreviewSignal();
-        if(!overrideUpdatePreview){
-
-            if(taskDeleg2.showPreviews)  {
-                var x1 = 0;
-                var y1 = 0;
-                var obj = previewRect.mapToItem(mainView,x1,y1);
-
-                previewManager.setWindowPreview(taskDeleg2.ccode,
-                                                obj.x+Settings.global.windowPreviewsOffsetX,
-                                                obj.y+Settings.global.windowPreviewsOffsetY,
-                                                previewRect.width-(2*previewRect.border.width),
-                                                previewRect.height-(2*previewRect.border.width));
-            }
-            else
-                previewManager.removeWindowPreview(taskDeleg2.ccode);
-        }*/
-    }
 
 
     function computeButtonsPosition(){

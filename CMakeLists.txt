@@ -10,7 +10,7 @@ set(ICON "preferences-activities")
 
 # Find the required Libaries
 find_package(KDE4 REQUIRED)
-find_package(KActivities REQUIRED)
+# find_package(KActivities REQUIRED)
 
 include(KDE4Defaults)
 
@@ -22,7 +22,5 @@ include_directories(
    ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-# add_subdirectory(components)
 add_subdirectory(package)
-# add_subdirectory(dataengines)
 # add_subdirectory(po)

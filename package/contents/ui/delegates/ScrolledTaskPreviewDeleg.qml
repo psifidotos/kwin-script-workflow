@@ -30,39 +30,6 @@ Item{
     property bool inShownArea:true
     property bool forcedState1InDialog:false
 
-    onInShownAreaChanged:{
-        if(task.state == task.state2)
-            updatePreview();
-    }
-
-    //This is scrolling support in the dialogs
-    Connections{
-        target:scrollingView
-        onContentYChanged:{
-            countInScrollingArea();
-
-            updatePreview();
-        }
-
-
-        onXChanged:{
-            if(task.state === task.state2)
-                updatePreview();
-        }
-        onYChanged:{
-            if(task.state === task.state2)
-                updatePreview();
-        }
-        onWidthChanged:{
-            if(task.state === task.state2)
-                updatePreview();
-        }
-        onHeightChanged:{
-            if(task.state === task.state2)
-                updatePreview();
-        }
-
-    }
 
     Connections{
         target:centralListView
@@ -74,15 +41,6 @@ Item{
 
     Component.onCompleted: {
         task.forceState1 = centralListView.onlyState1;
-    }
-
-    GridView.onAdd: {
-        if (task.showPreviews === true)
-            updatePreview();
-    }
-
-    GridView.onRemove:{
-        previewManager.removeWindowPreview(task.ccode);
     }
 
     ///////////////////////////////Graphic Items///////////////////////////////////////
@@ -123,7 +81,6 @@ Item{
         }
 
         onClickedSignal: container.onClicked();
-        onUpdatePreviewSignal: container.updatePreview();
         onDraggingStartedSignal: container.onDraggingStarted(mouse, obj);
         onDraggingEndedSignal: container.onDraggingEnded(mouse);
         onInformStateSignal: taskManager.setTaskState(ccode, nextstate, dialogActivity, dialogDesktop);
@@ -305,48 +262,6 @@ Item{
             forcedState1InDialog=false;
         }
         desktopDialog.completed();
-    }
-
-    function updatePreview(){
-        countInScrollingArea();
-
-        if((task.showPreviews === true)&&
-                (inShownArea === true))  {
-            var x1 = 0;
-            var y1 = 0;
-            var obj = task.previewRectAlias.mapToItem(mainView,x1,y1);
-
-            previewManager.setWindowPreview(task.ccode,
-                                            obj.x+Settings.global.windowPreviewsOffsetX,
-                                            obj.y+Settings.global.windowPreviewsOffsetY,
-                                            task.previewRectAlias.width-(2*task.previewRectAlias.border.width),
-                                            task.previewRectAlias.height-(2*task.previewRectAlias.border.width));
-        }
-
-        if((inShownArea === false)||
-                (task.showPreviews===false)){
-            previewManager.removeWindowPreview(task.ccode);
-        }
-    }
-
-
-    function countInScrollingArea(){
-        if((task.showPreviews === true)&&
-                (task.previewRectAlias.width === task.defPreviewWidth)){
-
-            var previewRelX = task.previewRectAlias.mapToItem(centralListView,0,0).x;
-            var previewRelY = task.previewRectAlias.mapToItem(centralListView,0,0).y;
-
-            var fixY = previewRelY - scrollingView.contentY;
-
-            if ((fixY>=0) &&
-                    ((fixY+task.previewRectAlias.height) <= scrollingView.height))
-                inShownArea = true;
-            else
-                inShownArea = false;
-        }
-        else
-            inShownArea = true;
     }
 
     function getIcon(){
