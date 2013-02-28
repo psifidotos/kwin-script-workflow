@@ -218,7 +218,7 @@ Item {
         }
     }
 
-    Keys.forwardTo: [keyNavigation]
+   /* Keys.forwardTo: [keyNavigation]
 
     MouseEventListener {
         id:zoomAreaListener
@@ -233,7 +233,7 @@ Item {
             else
                 zoomSlider.value=zoomSlider.value+2;
         }
-    }
+    }*/
 
 
     Component.onCompleted:{

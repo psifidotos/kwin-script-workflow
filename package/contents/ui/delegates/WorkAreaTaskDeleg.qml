@@ -178,6 +178,7 @@ Item{
         onClickedOverrideSignal: {
             workflowManager.activityManager().setCurrentActivityAndDesktop(mainWorkArea.actCode,mainWorkArea.desktop);
             taskManager.activateTask(taskDeleg1.ccode);
+            dialog.visible = false;
         }
 
         onDraggingStarted: {

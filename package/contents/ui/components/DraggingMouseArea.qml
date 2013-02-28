@@ -4,7 +4,7 @@ import ".."
 
 MouseArea {
     id:container
-//    anchors.fill: parent
+    //    anchors.fill: parent
     hoverEnabled: true
 
     property Item draggingInterface
@@ -24,6 +24,8 @@ MouseArea {
 
     property Item previousParent
 
+    property variant lastMouse
+
     onClicked: {
         tempPressed = false;
     }
@@ -33,6 +35,7 @@ MouseArea {
         py1 = mouse.y;
 
         tempPressed = true;
+        lastMouse = mouse;
     }
 
     onPositionChanged: {
@@ -56,6 +59,18 @@ MouseArea {
         }
         else{
             clickedOverrideSignal(mouse);
+        }
+    }
+
+    /*This fixes issue of clicking an item and because the dialog closes
+      application thinks that was dragged */
+    Connections{
+        target: dialog
+        onVisibleChanged:{
+            if(isPressed){
+                draggingEndedActions(lastMouse);
+                isPressed = false;
+            }
         }
     }
 

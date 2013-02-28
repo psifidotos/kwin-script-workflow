@@ -361,6 +361,7 @@ Item{
 
     function clickedWorkarea(){
         workflowManager.activityManager().setCurrentActivityAndDesktop(mainWorkArea.actCode,mainWorkArea.desktop);
+        dialog.visible = false;
     }
 
     function getBorderRectangle(){
