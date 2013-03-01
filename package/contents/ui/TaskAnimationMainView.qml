@@ -108,7 +108,7 @@ QIconItem{
             }
         }
 
-        var fixPosElem = newPosElem.mapToItem(mainView,newPosElem.toRX,newPosElem.toRY);
+        var fixPosElem = newPosElem.mapToItem(parent,newPosElem.toRX,newPosElem.toRY);
 
         taskAnimation.toX = fixPosElem.x;
         taskAnimation.toY = fixPosElem.y;

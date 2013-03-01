@@ -74,7 +74,7 @@ Item{
             var x1 = activityIcon.x;
             var y1 = activityIcon.y;
 
-            mainView.getDynLib().animateActiveToStop(ccode,activityIcon.mapToItem(mainView,x1, y1));
+            mainView.getDynLib().animateActiveToStop(ccode,activityIcon.mapToItem(mainDialogItem,x1, y1));
         }
 
     }

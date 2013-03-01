@@ -324,7 +324,7 @@ Item{
             var y1 = activityIconDisabled.y;
 
             //activityAnimate.animateStoppedToActive(ccode,activityIcon.mapToItem(mainView,x1, y1));
-            mainView.getDynLib().animateStoppedToActive(ccode,activityIconDisabled.mapToItem(mainView,x1, y1));
+            mainView.getDynLib().animateStoppedToActive(ccode,activityIconDisabled.mapToItem(mainDialogItem,x1, y1));
         }
     }
 

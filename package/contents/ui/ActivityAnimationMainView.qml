@@ -71,7 +71,7 @@ QIconItem{
                 }
             }
 
-            fixPosElem = newPosElem.mapToItem(mainView,newPosElem.toRX,newPosElem.toRY);
+            fixPosElem = newPosElem.mapToItem(parent,newPosElem.toRX,newPosElem.toRY);
 
             fixPosElem.toX = fixPosElem.x;
 

@@ -170,11 +170,11 @@ Rectangle{
 
     }
 
-    PlasmaCore.ToolTip{
+    /*PlasmaCore.ToolTip{
         mainText: i18n("Add Activity")
         subText: i18n("Add an Activity with default settings.")
         target: addActivityMouseArea
         //image: plusIcon.source
-    }
+    }*/
 }
 
