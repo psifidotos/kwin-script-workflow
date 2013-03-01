@@ -16,11 +16,11 @@ PlasmaCore.FrameSvgItem{
     /*property alias insideWidth: dialogInsideRect.width
     property alias insideHeight: dialogInsideRect.height*/
     anchors.centerIn:parent
+
     property int insideWidth: 200
     property int insideHeight: 200
     property int spaceX:10
     property int spaceY:30
-
 
     //    property int insideX: templMainDialog.x+dialogInsideRect.x + spaceX
     //    property int insideY: templMainDialog.y+dialogInsideRect.y+titleMesg.height+spaceY
@@ -120,7 +120,6 @@ PlasmaCore.FrameSvgItem{
 
             width:parent.width
             height:parent.height
-
 
             anchors.centerIn: parent
 

@@ -14,8 +14,6 @@ import org.kde.kwin 0.1 as KWin
 DialogTemplate2{
     id:calibDialog
 
- //   anchors.centerIn: mainView
-
     insideWidth: 0.7*mainView.width
     insideHeight: 0.6*mainView.height
 
@@ -508,7 +506,7 @@ DialogTemplate2{
     }
 
     function openD(){
-        calibrationDialog.open();
+        calibDialog.open();
 
         xOffsetSlider.value = Settings.global.windowPreviewsOffsetX;
         yOffsetSlider.value = Settings.global.windowPreviewsOffsetY;
