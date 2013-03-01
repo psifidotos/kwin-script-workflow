@@ -90,10 +90,7 @@ PlasmaComponents.ToolBar {
                     hoverEnabled: true
 
                     onClicked:{
-                    //    lockerToolBtn.checked = !lockerToolBtn.checked;
                         Settings.global.lockActivities = !Settings.global.lockActivities;
-
-                        console.log("Locked....");
                     }
                 }
 
@@ -145,7 +142,6 @@ PlasmaComponents.ToolBar {
                     hoverEnabled: true
 
                     onClicked:{
-                        //windowsToolBtn.checked = !windowsToolBtn.checked;
                         Settings.global.showWindows = !Settings.global.showWindows;
                     }
                 }
@@ -217,10 +213,6 @@ PlasmaComponents.ToolBar {
                                 mainView.getDynLib().showFirstCalibrationDialog();
                                 Settings.global.firstRunCalibrationPreviews = true;
                             }
-
-                            //      if(previewManager.mainWindowIdisSet() === false)
-                            //      previewManager.updatePopWindowWId();
-
                         }
                     }
 
@@ -266,7 +258,6 @@ PlasmaComponents.ToolBar {
         tooltipText: i18n("This dialog contains information about the application but you can also find \"Help Tour\" and \"Report Bug\" choices.")
 
         onClicked: {
-            console.log("I am here....");
             mainView.getDynLib().showAboutDialog();
         }
     }
@@ -281,7 +272,7 @@ PlasmaComponents.ToolBar {
         width: 0.65*oxygenTitle.buttonWidth
         height: 0.75*oxygenTitle.buttonHeight
         opacityAnimation: true
-        icon: "edit-delete"
+        icon: "dialog-close"
 
         tooltipTitle: i18n("Quit")
         tooltipText: i18n("Close the WorkFlow kwin script")

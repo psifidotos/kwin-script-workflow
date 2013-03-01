@@ -261,9 +261,15 @@ Item {
         mainView.screenY = screen.y;
 
         console.log("I am in script...");
-        registerScreenEdge(KWin.ElectricBottomRight, function () {
+        registerScreenEdge(KWin.ElectricBottomLeft, function () {
             toggleBoth();
             print("Screen Edge activated");
+        });
+
+        // register dashboard shortcut
+        registerShortcut("WorkFlow: KWin Script", "", "Meta+Ctrl+Z", function() {
+            toggleBoth();
+            print("Shortcut activated");
         });
     }
 
