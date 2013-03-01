@@ -16,6 +16,7 @@ Item{
     property bool filterCalled:false
 
     property bool ctrlActive: false
+    property bool metaActive: false
 
     focus: true
 
@@ -69,17 +70,29 @@ Item{
                 filterCalled = true;
                 filterWindows.forceActiveFocus();
             }
+        }//Hide kwin script on default shortcut
+        else if(event.key === Qt.Key_Z){
+            if(ctrlActive && metaActive){
+                ctrlActive = false;
+                metaActive = false;
+                mainView.toggleBoth();
+            }
         }
         else if(event.key === Qt.Key_Control){
-         //   console.log("true");
             ctrlActive = true;
+        }
+        else if(event.key === Qt.Key_Meta){
+            metaActive = true;
         }
     }
     Keys.onReleased: {
         if(event.key === Qt.Key_Control){
-         //   console.log("false");
             ctrlActive = false;
         }
+        else if(event.key === Qt.Key_Meta){
+            metaActive = false;
+        }
+
     }
 
     //"h" = "left", "j" = "downwards", "k" = "upwards", "l" = "right" (where the latter one is an "L")
