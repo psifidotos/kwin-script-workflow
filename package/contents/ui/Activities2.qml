@@ -23,7 +23,6 @@ import "../code/settings.js" as Settings
 Item {
     id:mainView
     objectName: "instMainView"
-    focus:true
 
     property int screenWidth: 0
     property int screenHeight: 0
@@ -32,6 +31,8 @@ Item {
 
     width: screenWidth
     height: screenHeight
+
+    focus: true
 
     Settings {
         id: settings
@@ -77,7 +78,7 @@ Item {
     Connections{
         target:filterWindows
         onTextChanged:{
-            console.log(filterWindows.text);
+            //console.log(filterWindows.text);
             if(filterWindows.text === ""){
                 filteredTasksModel.fixBugString = "'''";
                 timerBug.start();
@@ -119,122 +120,133 @@ Item {
         sourceModel: workflowManager.model()
     }
 
-    PlasmaCore.Dialog {
-        id: dialog
-        visible: false
-        windowFlags: Qt.X11BypassWindowManagerHint
+    /*Main Interface */
+    Item{
+        id:mainDialogItem
+        width: mainView.width-1
+        height:mainView.height-1
 
-        x: screenX + ((screenWidth/2) - (width/2));
-        y: screenY + ((screenHeight/2) - (height/2));
+        Item{
+            id:centralArea
+            anchors.fill: parent
 
-        onVisibleChanged: {
-            if(visible){
-                // position might have changed
-                var screen = workspace.clientArea(KWin.ScreenArea, workspace.activeScreen, workspace.currentDesktop);
-                mainView.screenWidth = screen.width;
-                mainView.screenHeight = screen.height;
-                mainView.screenX = screen.x;
-                mainView.screenY = screen.y;
+            property string typeId: "centralArea"
+
+            WorkAreasAllLists{
+                id: allWorkareas
+
+                y:oxygenT.height
+                width:(mAddActivityBtn.showRedCross) ? mainDialogItem.width-mAddActivityBtn.width : mainDialogItem.width
+                height:mainView.height - y
+                verticalScrollBarLocation: stoppedPanel.x
+                clip:true
+
+                workareaWidth: mainView.workareaWidth
+                workareaHeight: mainView.workareaHeight
+                scale: mainView.scaleMeter
+                animationsStep: Settings.global.animationStep
+            }
+
+            StoppedActivitiesPanel{
+                id:stoppedPanel
+            }
+
+            MainAddActivityButton{
+                id: mAddActivityBtn
+            }
+
+            AllActivitiesTasks{
+                id:allActT
+            }
+
+            ZoomSliderItem{
+                id:zoomSlider
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 7
+                anchors.right: parent.right
+                anchors.rightMargin: 7
+
+                onValueChanged: Settings.global.scale = value;
+
+                Component.onCompleted: value = Settings.global.scale;
+            }
+
+            TitleMainView{
+                id:oxygenT
             }
         }
 
-        mainItem: Item{
-            id:mainDialogItem
-            width: mainView.width-1
-            height:mainView.height-1
+        FilterWindows{
+            id:filterWindows
+            width:Math.max(0.3*parent.width,250)
+        }
 
-            Item{
-                id:centralArea
-                anchors.fill: parent
+        DraggingInterfaceTasks{
+            id:mDragInt
+        }
 
-                property string typeId: "centralArea"
+        DraggingInterfaceActivities{
+            id:draggingActivities
+        }
 
-                WorkAreasAllLists{
-                    id: allWorkareas
-                    z:4
+        KeyNavigation{
+            id:keyNavigation
+        }
 
-                    y:oxygenT.height
-                    width:(mAddActivityBtn.showRedCross) ? mainDialogItem.width-mAddActivityBtn.width : mainDialogItem.width
-                    height:mainView.height - y
-                    verticalScrollBarLocation: stoppedPanel.x
-                    clip:true
+        MouseEventListener {
+            id:zoomAreaListener
+            anchors.fill:parent
+            z:keyNavigation.ctrlActive ? 40 : -1
+            //enabled: keyNavigation.ctrlActive
+            visible: keyNavigation.ctrlActive
 
-                    workareaWidth: mainView.workareaWidth
-                    workareaHeight: mainView.workareaHeight
-                    scale: mainView.scaleMeter
-                    animationsStep: Settings.global.animationStep
-                }
-
-                StoppedActivitiesPanel{
-                    id:stoppedPanel
-                    z:6
-                }
-
-                MainAddActivityButton{
-                    id: mAddActivityBtn
-                    z:7
-                }
-
-                TitleMainView{
-                    id:oxygenT
-                    z:8
-                }
-
-                AllActivitiesTasks{
-                    id:allActT
-                    z:7
-                }
-
-                ZoomSliderItem{
-                    id:zoomSlider
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 7
-                    anchors.right: parent.right
-                    anchors.rightMargin: 7
-                    z:10
-
-                    onValueChanged: Settings.global.scale = value;
-
-                    Component.onCompleted: value = Settings.global.scale;
-                }
-            }
-
-            FilterWindows{
-                id:filterWindows
-                width:Math.max(0.3*parent.width,250)
-            }
-
-            DraggingInterfaceTasks{
-                id:mDragInt
-            }
-
-            DraggingInterfaceActivities{
-                id:draggingActivities
-            }
-
-            KeyNavigation{
-                id:keyNavigation
+            onWheelMoved:{
+                if(wheel.delta < 0)
+                    zoomSlider.value=zoomSlider.value-2;
+                else
+                    zoomSlider.value=zoomSlider.value+2;
             }
         }
     }
 
-   /* Keys.forwardTo: [keyNavigation]
+    Keys.forwardTo: [keyNavigation]
 
-    MouseEventListener {
-        id:zoomAreaListener
-        anchors.fill:parent
-        z:keyNavigation.ctrlActive ? 40 : -1
-        //enabled: keyNavigation.ctrlActive
-        visible: keyNavigation.ctrlActive
+    /*End of Main Interface */
+    PlasmaCore.Dialog {
+        id: dialog
+        visible: false
+        //windowFlags: Qt.X11BypassWindowManagerHint
+        windowFlags: Qt.Popup
 
-        onWheelMoved:{
-            if(wheel.delta < 0)
-                zoomSlider.value=zoomSlider.value-2;
-            else
-                zoomSlider.value=zoomSlider.value+2;
+        x: screenX + ((screenWidth/2) - (width/2));
+        y: screenY + ((screenHeight/2) - (height/2));
+
+        mainItem: mainDialogItem
+    }
+
+    // toggle complete dashboard
+    function toggleBoth() {
+
+        if(dialog.visible === true) {
+            dialog.visible = false;
+            workspace.slotToggleShowDesktop();
+        } else {
+            var screen = workspace.clientArea(KWin.ScreenArea, workspace.activeScreen, workspace.currentDesktop);
+            mainView.screenWidth = screen.width;
+            mainView.screenHeight = screen.height;
+            mainView.screenX = screen.x;
+            mainView.screenY = screen.y;
+
+            dialog.visible = true;
+
+            // Activate Window and text field
+            dialog.activateWindow();
+            mainView.forceActiveFocus();
+
+            workspace.slotToggleShowDesktop();
         }
-    }*/
 
+    }
 
     Component.onCompleted:{
         DynamAnim.createComponents();
@@ -248,14 +260,11 @@ Item {
         mainView.screenX = screen.x;
         mainView.screenY = screen.y;
 
-        mainView.forceActiveFocus();
-
         console.log("I am in script...");
         registerScreenEdge(KWin.ElectricBottomRight, function () {
-            dialog.visible = !dialog.visible;
+            toggleBoth();
             print("Screen Edge activated");
         });
-
     }
 
 
@@ -307,7 +316,7 @@ Item {
     signal completed;
     property bool disablePreviews;
 
-    property variant removeDialog:mainView
+   property variant removeDialog:mainView
     property variant cloningDialog:mainView
     property variant desktopDialog:mainView
     property variant calibrationDialog:mainView

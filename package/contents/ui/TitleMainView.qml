@@ -11,11 +11,11 @@ import org.kde.qtextracomponents 0.1
 import "../code/settings.js" as Settings
 
 PlasmaComponents.ToolBar {
-//Rectangle{
+    //Rectangle{
     id:oxygenTitle
     anchors.top:parent.top
     width:parent.width
-//    color:"#dcdcdc"
+
     height: workareaY/3
 
     property alias lockerChecked:lockerToolBtn.checked
@@ -37,25 +37,6 @@ PlasmaComponents.ToolBar {
         }
     }
 
-    /*
-    Rectangle{
-        y:parent.height
-
-        height:parent.width
-        width:parent.height
-
-        rotation: -90
-        transformOrigin: Item.TopLeft
-
-        gradient: Gradient {
-            GradientStop { position: 0.0; color:"#00ffffff" }
-            GradientStop { position: 0.35; color: "#ffffffff" }
-            GradientStop { position: 0.65; color: "#ffffffff" }
-            GradientStop { position: 1.0; color: "#00ffffff" }
-        }
-
-    }*/
-
     Text{
         anchors.top:oxygenTitle.top
         anchors.horizontalCenter: oxygenTitle.horizontalCenter
@@ -65,6 +46,7 @@ PlasmaComponents.ToolBar {
 
         color:"#777777"
     }
+
 
     Row{
         x: 0.7 * oxygenTitle.height
@@ -108,20 +90,22 @@ PlasmaComponents.ToolBar {
                     hoverEnabled: true
 
                     onClicked:{
-                        //lockerToolBtn.checked = !lockerToolBtn.checked;
+                    //    lockerToolBtn.checked = !lockerToolBtn.checked;
                         Settings.global.lockActivities = !Settings.global.lockActivities;
+
+                        console.log("Locked....");
                     }
                 }
+
             }
 
-            PlasmaCore.ToolTip{
+            /*PlasmaCore.ToolTip{
                 mainText: lockerToolBtn.checked ? i18n("Unlock Activities") : i18n("Lock Activities")
                 subText: lockerToolBtn.checked ? i18n("Unlock Activities to enable editing.") :
                                                  i18n("Lock Activities to disable editing. In Locked state only Pause and Restore actions are enabled.")
-                target:lockerToolBtnMouseArea
+                target: lockerToolBtnMouseArea
                 image: lockerImg.currentIcon
-            }
-
+            }*/
         }
 
         //Second Button///////////
@@ -167,12 +151,12 @@ PlasmaComponents.ToolBar {
                 }
             }
 
-            PlasmaCore.ToolTip{
+            /*PlasmaCore.ToolTip{
                 mainText: i18n("Show/Hide Windows")
                 subText: i18n("Show or hide all windows to enhance your workflow.")
                 target:windowsToolBtnMouseArea
                 image: windowsImg.currentIcon
-            }
+            }*/
         }
 
         //Third Button
@@ -234,8 +218,8 @@ PlasmaComponents.ToolBar {
                                 Settings.global.firstRunCalibrationPreviews = true;
                             }
 
-                      //      if(previewManager.mainWindowIdisSet() === false)
-                          //      previewManager.updatePopWindowWId();
+                            //      if(previewManager.mainWindowIdisSet() === false)
+                            //      previewManager.updatePopWindowWId();
 
                         }
                     }
@@ -252,12 +236,12 @@ PlasmaComponents.ToolBar {
 
             }
 
-            PlasmaCore.ToolTip{
+          /*PlasmaCore.ToolTip{
                 mainText: i18n("Enable/Disable Previews")
                 subText: i18n("Enable/disable window previews.<br/> By <i>\"Pressing and Holding\"</i> the Calibration Dialog is appearing.")
                 target:effectsToolBtnMouseArea
                 image: effectsImg.currentIcon
-            }
+            }*/
 
         }
 
@@ -299,8 +283,11 @@ PlasmaComponents.ToolBar {
         opacityAnimation: true
         icon: "edit-delete"
 
+        tooltipTitle: i18n("Quit")
+        tooltipText: i18n("Close the WorkFlow kwin script")
+
         onClicked: {
-            dialog.visible = !dialog.visible;
+            mainView.toggleBoth();
         }
     }
 
