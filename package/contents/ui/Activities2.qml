@@ -123,8 +123,8 @@ Item {
     /*Main Interface */
     Item{
         id:mainDialogItem
-        width: mainView.width-1
-        height:mainView.height-1
+        width: mainView.width
+        height:mainView.height
 
         Item{
             id:centralArea
@@ -218,7 +218,7 @@ Item {
         //windowFlags: Qt.X11BypassWindowManagerHint
         windowFlags: Qt.Popup
 
-        x: screenX + ((screenWidth/2) - (width/2));
+        x: screenX + ((screenWidth/2) - (width/2)+1);
         y: screenY + ((screenHeight/2) - (height/2));
 
         mainItem: mainDialogItem
