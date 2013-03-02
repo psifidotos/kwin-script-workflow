@@ -64,7 +64,7 @@ Item {
         }
     }
 
-/*    PlasmaCore.ToolTip{
+    /*PlasmaCore.ToolTip{
         mainText: tooltipTitle
         subText: tooltipText
         target: mouseArea

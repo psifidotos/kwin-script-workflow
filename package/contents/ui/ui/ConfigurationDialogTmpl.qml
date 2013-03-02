@@ -117,6 +117,7 @@ DialogTemplate2{
             }
         }
 
+
         Item{
             height: genColumn.heightSize
             width: genColumn.totalRowWidth

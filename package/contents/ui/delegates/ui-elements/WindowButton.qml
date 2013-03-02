@@ -231,7 +231,7 @@ Item{
                 var x1 = mainIcon.x;
                 var y1 = mainIcon.y;
 
-                var crd = mainIcon.mapToItem(mainView,x1, y1);
+                var crd = mainIcon.mapToItem(mainDialogItem,x1, y1);
 
                 mainView.getDynLib().animateIcon(mainIcon.source,
                                                  mainIcon.height/mainIcon.width,

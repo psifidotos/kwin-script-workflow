@@ -29,10 +29,12 @@ Item {
     property int screenX: 0
     property int screenY: 0
 
-    width: screenWidth
+    width: screenWidth-paddingWidth
     height: screenHeight
 
-    focus: true
+    property int paddingWidth: 24
+
+ //   focus: true
 
     Settings {
         id: settings
@@ -124,7 +126,7 @@ Item {
     Item{
         id:mainDialogItem
         width: mainView.width
-        height:mainView.height
+        height: mainView.height
 
         Item{
             id:centralArea
@@ -137,7 +139,7 @@ Item {
 
                 y:oxygenT.height
                 width:(mAddActivityBtn.showRedCross) ? mainDialogItem.width-mAddActivityBtn.width : mainDialogItem.width
-                height:mainView.height - y
+                height:mainView.height - y - 10
                 verticalScrollBarLocation: stoppedPanel.x
                 clip:true
 
@@ -145,6 +147,12 @@ Item {
                 workareaHeight: mainView.workareaHeight
                 scale: mainView.scaleMeter
                 animationsStep: Settings.global.animationStep
+              /*  Rectangle{ //Debug Rectangle
+                    opacity:0.3
+                    color:"blue"
+                    z:100
+                    anchors.fill: parent
+                }*/
             }
 
             StoppedActivitiesPanel{
@@ -219,12 +227,10 @@ Item {
     PlasmaCore.Dialog {
         id: dialog
         visible: false
-        //windowFlags: Qt.X11BypassWindowManagerHint
-        windowFlags: Qt.Popup
+        windowFlags: Qt.Popup | Qt.X11BypassWindowManagerHint
 
-        x: screenX + ((screenWidth/2) - (width/2)+1);
-        y: screenY + ((screenHeight/2) - (height/2));
-
+        x: screenX + 1
+        y: screenY
         mainItem: mainDialogItem
     }
 
@@ -241,11 +247,13 @@ Item {
             mainView.screenX = screen.x;
             mainView.screenY = screen.y;
 
-            dialog.visible = true;
+      //      dialog.x = screenX+1;
+       //     dialog.y = screenY+1;
 
             // Activate Window and text field
             dialog.activateWindow();
             mainView.forceActiveFocus();
+            dialog.visible = true;
 
             workspace.slotToggleShowDesktop();
         }
@@ -265,7 +273,7 @@ Item {
         mainView.screenY = screen.y;
 
         console.log("I am in script...");
-        registerScreenEdge(KWin.ElectricBottomLeft, function () {
+        registerScreenEdge(KWin.ElectricTopLeft, function () {
             toggleBoth();
             print("Screen Edge activated");
         });
