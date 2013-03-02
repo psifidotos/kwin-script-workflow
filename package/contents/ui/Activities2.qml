@@ -32,9 +32,7 @@ Item {
     width: screenWidth-paddingWidth
     height: screenHeight
 
-    property int paddingWidth: 24
-
- //   focus: true
+    property int paddingWidth: 0
 
     Settings {
         id: settings
@@ -44,15 +42,15 @@ Item {
     anchors.fill: parent
 
     property int scaleMeter: zoomSlider.value
-
     property real zoomingHeightFactor: ((zoomSlider.value-zoomSlider.minimumValue)/(zoomSlider.maximumValue-zoomSlider.minimumValue))*0.6
-
     property int workareaWidth: 70+(2.8*mainView.scaleMeter) + (mainView.scaleMeter-5)/3;
     property int workareaHeight:(3.6 - zoomingHeightFactor)*scaleMeter
     property int workareaY:2*scaleMeter
 
     //Applications properties/////
     property bool disablePreviewsWasForcedInDesktopDialog:false //as a reference to DesktopDialog because it is dynamic from now one
+
+    property QtObject mainClient
 
     WorkFlowComponents.SessionParameters {
         id: sessionParameters
@@ -127,6 +125,60 @@ Item {
         id:mainDialogItem
         width: mainView.width
         height: mainView.height
+        state: "hidden"
+        opacity: 0
+     //   opacity: 1
+
+     //   property alias opacityG: mainDialogItem.opacity
+
+
+   /*     onOpacityGChanged: {
+            //mainDialogItem.opacity = opacityG;
+           // if(opacityG>0)
+           //     workspace.slotToggleShowDesktop();
+        }*/
+
+        states:[
+            State {
+                name:"hidden"
+            },
+            State {
+                name:"shown"
+            }
+        ]
+
+        transitions: [
+            Transition {
+                from:"hidden"; to:"shown"
+                reversible: false
+                SequentialAnimation{
+                    PropertyAnimation { target: dialog; property: "visible"; duration:0; from:0; to:1}
+                    NumberAnimation {
+                        target: mainDialogItem
+                        property:"opacity"
+                        duration: Settings.global.animationStep;
+                        easing.type: Easing.InOutQuad;
+                        from:0;
+                        to:1;
+                    }
+                }
+            },
+            Transition {
+                from:"shown"; to:"hidden"
+                reversible: false
+                SequentialAnimation{
+                    NumberAnimation {
+                        target: mainDialogItem
+                        property:"opacity"
+                        duration: Settings.global.animationStep;
+                        easing.type: Easing.InOutQuad;
+                        from:1;
+                        to:0;
+                    }
+                    PropertyAnimation { target: dialog; property: "visible"; duration:0; from:1; to:0}
+                }
+            }
+        ]
 
         Item{
             id:centralArea
@@ -139,7 +191,7 @@ Item {
 
                 y:oxygenT.height
                 width:(mAddActivityBtn.showRedCross) ? mainDialogItem.width-mAddActivityBtn.width : mainDialogItem.width
-                height:mainView.height - y - 10
+                height:mainView.height - y
                 verticalScrollBarLocation: stoppedPanel.x
                 clip:true
 
@@ -147,7 +199,7 @@ Item {
                 workareaHeight: mainView.workareaHeight
                 scale: mainView.scaleMeter
                 animationsStep: Settings.global.animationStep
-              /*  Rectangle{ //Debug Rectangle
+                /*  Rectangle{ //Debug Rectangle
                     opacity:0.3
                     color:"blue"
                     z:100
@@ -232,14 +284,19 @@ Item {
         x: screenX + 1
         y: screenY
         mainItem: mainDialogItem
+
+        onVisibleChanged: {
+         //   if (visible)
+                workspace.slotToggleShowDesktop();
+        }
     }
 
     // toggle complete dashboard
     function toggleBoth() {
-
-        if(dialog.visible === true) {
-            dialog.visible = false;
-            workspace.slotToggleShowDesktop();
+        //if(dialog.visible === true) {
+        if(mainDialogItem.state === "shown" ){
+            mainDialogItem.state = "hidden";
+           // dialog.visible = false;
         } else {
             var screen = workspace.clientArea(KWin.ScreenArea, workspace.activeScreen, workspace.currentDesktop);
             mainView.screenWidth = screen.width;
@@ -247,15 +304,14 @@ Item {
             mainView.screenX = screen.x;
             mainView.screenY = screen.y;
 
-      //      dialog.x = screenX+1;
-       //     dialog.y = screenY+1;
+            //      dialog.x = screenX+1;
+            //     dialog.y = screenY+1;
 
             // Activate Window and text field
             dialog.activateWindow();
             mainView.forceActiveFocus();
-            dialog.visible = true;
-
-            workspace.slotToggleShowDesktop();
+           // dialog.visible = true;
+            mainDialogItem.state = "shown";
         }
 
     }
@@ -272,16 +328,18 @@ Item {
         mainView.screenX = screen.x;
         mainView.screenY = screen.y;
 
-        console.log("I am in script...");
+        /*Set client for the dialog*/
+        mainClient = workspace.getClient(dialog.windowId);
+        /*****************/
+
+
         registerScreenEdge(KWin.ElectricTopLeft, function () {
             toggleBoth();
-            print("Screen Edge activated");
         });
 
         // register dashboard shortcut
         registerShortcut("WorkFlow: KWin Script", "", "Meta+Ctrl+Z", function() {
             toggleBoth();
-            print("Shortcut activated");
         });
     }
 
@@ -328,9 +386,9 @@ Item {
         }
     }
 
-   // CalibrationDialogTmpl{}
-  //      TourDialog{
-  //  }
+    // CalibrationDialogTmpl{}
+    //      TourDialog{
+    //  }
 
     Connections {
         target: options
