@@ -15,7 +15,6 @@ Differences To Default KDE workflow
 
 Installation
 ============
-To build and install:
     cd package
     plasmapkg --type kwinscript -i .
 
@@ -43,4 +42,4 @@ Uninstall
 Requirements  
 ------------
 plasmoid-workflow >= 0.3.0
-KDE>= 4.9
+KDE >= 4.9
