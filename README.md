@@ -1,6 +1,6 @@
 About
 =====
-This is the plasmoid version derived from the WorkFlow project. The project is
+This is the kwin script version derived from the WorkFlow project. The project is
 trying to enhance every user's unique workflow by combining existing technologies
 from Plasma. 
 
@@ -16,37 +16,31 @@ Differences To Default KDE workflow
 Installation
 ============
 To build and install:
+    cd package
+    plasmapkg --type kwinscript -i .
 
-Automatic
+Important Notice - How to enable the script
 ---------
-    sudo sh install.sh
+You should make a relogin in order for the script to appear
+in System Settings -> Window Behavior -> KWin Scripts
+then you check it and apply the changes.
+You should make a relogin one more time in order for the script
+to be activated in plasma.
 
-Manual
-------
-    mkdir build && cd build
-    cmake .. -DCMAKE_INSTALL_PREFIX=`kde4-config --prefix`
-    make
-    sudo make install
-
-Important Notice
----------
-If you upgrade from previous versions then you must
-make a relogin in order to update the data engine. 
+Script uses TopLeft Corner to be activated or
+global shortcut Meta+Ctrl+Z(which you can change if you want)
     
-Upgrade
+Update
 =========
-Before you install version 0.3.0 and later you must
-completely uninstall previous versions (0.2.0 - 0.2.2)
-If you had made an installation from source using the previous
-steps then an easy way to uninstall is to enter the
-build directory inside the plasmoid source directory and run:
-
-    sudo make uninstall
+    cd package
+    plasmapkg --type kwinscript -u .    
+    
+Uninstall
+=========
+    cd package
+    plasmapkg --type kwinscript -r .
     
 Requirements  
 ------------
-kdebase4-workspace-devel >= 4.8  
-libkdecore4-devel >= 4.8  
-xorg-x11-libX11-devel  
-libkactivities-devel >= 4.8  
-libkde4-devel >= 4.8
+plasmoid-workflow >= 0.3.0
+KDE>= 4.9
