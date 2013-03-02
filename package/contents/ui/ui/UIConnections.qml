@@ -21,6 +21,7 @@ Item{
 
     property variant liveTourDialog:container
     property variant aboutDialog:container
+    property variant configurationDialog:container
 
     property variant firstHelpTourDialog:container
     property variant firstCalibrationDialog:container
@@ -74,6 +75,13 @@ Item{
         target:aboutDialog
         onCompleted:{
             mainView.getDynLib().deleteAboutDialog();
+        }
+    }
+
+    Connections{
+        target:configurationDialog
+        onCompleted:{
+            mainView.getDynLib().deleteConfigurationDialog();
         }
     }
 

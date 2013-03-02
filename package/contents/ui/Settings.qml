@@ -5,7 +5,7 @@ QtObject {
     property bool lockActivities: readConfig("LockActivities", true)
     property bool showWindows: readConfig("ShowWindows", true)
     property int scale: readConfig("Scale", 50)
-    property int animations: readConfig("Animations", 2);
+    property int animations: readConfig("Animations", 1);
     property int animationSpeed: readConfig("AnimationSpeed", 200)
     property int animationStep: animations >= 1 ? animationSpeed:0
     property int animationStep2: animations >= 2 ? animationSpeed:0

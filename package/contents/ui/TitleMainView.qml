@@ -240,17 +240,16 @@ PlasmaComponents.ToolBar {
     }// End Of Left Set of Buttons // Row
 
 
-
     IconButton{
         id:helpBtn
 
         opacity:1
-        anchors.right: quitBtn.left
-        anchors.rightMargin: 5
+        anchors.right: configBtn.left
+        anchors.rightMargin: 1
         anchors.verticalCenter: parent.verticalCenter
 
-        width: 0.65*oxygenTitle.buttonWidth
-        height: 0.75*oxygenTitle.buttonHeight
+        width: 0.6*oxygenTitle.buttonWidth
+        height: 0.6*oxygenTitle.buttonHeight
         opacityAnimation: true
         icon: "system-help"
 
@@ -263,14 +262,35 @@ PlasmaComponents.ToolBar {
     }
 
     IconButton{
+        id:configBtn
+
+        opacity:1
+        anchors.right: quitBtn.left
+        anchors.rightMargin: 5
+        anchors.verticalCenter: parent.verticalCenter
+
+        width: 0.6*oxygenTitle.buttonWidth
+        height: 0.6*oxygenTitle.buttonHeight
+        opacityAnimation: true
+        icon: "configure"
+
+        tooltipTitle: i18n("Configuration Dialog")
+        tooltipText: i18n("This dialog contains the configuration for the kwin script")
+
+        onClicked: {
+            mainView.getDynLib().showConfigurationDialog();
+        }
+    }
+
+    IconButton{
         id:quitBtn
 
         opacity:1
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
 
-        width: 0.65*oxygenTitle.buttonWidth
-        height: 0.75*oxygenTitle.buttonHeight
+        width: 0.75*oxygenTitle.buttonWidth
+        height: 0.85*oxygenTitle.buttonHeight
         opacityAnimation: true
         icon: "dialog-close"
 

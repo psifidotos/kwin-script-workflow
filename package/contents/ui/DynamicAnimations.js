@@ -27,6 +27,19 @@ function deleteRemoveDialog(){
     uiConnect.removeDialog.destroy();
 }
 
+///////////////Configuration Dialog/////////////////
+function showConfigurationDialog(){
+    var cfgDialog = Qt.createComponent("ui/ConfigurationDialogTmpl.qml");
+
+    uiConnect.configurationDialog = cfgDialog.createObject(uiConnect);
+    uiConnect.configurationDialog.defColor = theme.textColor;
+    uiConnect.configurationDialog.open();
+}
+
+function deleteConfigurationDialog(){
+    uiConnect.configurationDialog.destroy();
+}
+
 ///////////////Clone Dialog/////////////////
 function showCloneDialog(actId,actName){
     var clnDialog = Qt.createComponent("ui/CloningDialogTmpl.qml");
@@ -38,7 +51,6 @@ function showCloneDialog(actId,actName){
     uiConnect.cloningDialog.defColor = theme.textColor;
 
     uiConnect.cloningDialog.open();
-
 }
 
 function deleteCloneDialog(){

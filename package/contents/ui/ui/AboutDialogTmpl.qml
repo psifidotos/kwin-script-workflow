@@ -63,7 +63,7 @@ DialogTemplate2{
 
         AnimatedText{
             id:versionText
-            fullText:i18n("Plasmoid Version:")+" <i>"+"0.3.0"+"</i>"
+            fullText:i18n("KWin Script Version:")+" <i>"+"0.3.0"+"</i>"
 
             font.pixelSize: smallFont
             font.bold: true
