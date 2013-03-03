@@ -40,9 +40,7 @@ Item{
             isActive = false;
             filterCalled = false;
         } else {
-            plasmoid.hidePopup();
-            if(!plasmoidWrapper.isInPanel)
-                taskManager.hideDashboard();
+            mainView.toggleBoth();
         }
     }
     Keys.onPressed: {

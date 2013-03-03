@@ -287,7 +287,7 @@ Item {
 
         onVisibleChanged: {
          //   if (visible)
-                workspace.slotToggleShowDesktop();
+          //      workspace.slotToggleShowDesktop(); //it disables live previews in normal previews setting
         }
     }
 
