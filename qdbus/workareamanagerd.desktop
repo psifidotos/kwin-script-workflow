@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KDEDModule
+X-KDE-Library=workareamanagerd
+X-KDE-DBus-ModuleName=workareamanagerd
+X-KDE-Kded-autoload=true
+
+Name=Workarea Manager
+
+Comment=The workarea management backend

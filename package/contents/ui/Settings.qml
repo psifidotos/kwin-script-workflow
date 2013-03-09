@@ -9,18 +9,18 @@ QtObject {
     property int animationSpeed: readConfig("AnimationSpeed", 200)
     property int animationStep: animations >= 1 ? animationSpeed:0
     property int animationStep2: animations >= 2 ? animationSpeed:0
-    property bool windowPreviews: readConfig("WindowPreviews", true)
-    property int windowPreviewsOffsetX: readConfig("WindowPreviewsOffsetX", 0)
-    property int windowPreviewsOffsetY: readConfig("WindowPreviewsOffsetY", 0)
-    property int fontRelevance: readConfig("FontRelevance", 0)
-    property bool showStoppedPanel: readConfig("ShowStoppedPanel", true)
-    property bool firstRunTour: readConfig("FirstRunTour", false)
-    property bool firstRunCalibration: readConfig("FirstRunCalibration", false)
-    property bool hideOnClick: readConfig("HideOnClick", false)
-    property bool useCurrentActivityIcon: readConfig("UseCurrentActivityIcon", false)
-    property bool disableEverywherePanel: readConfig("DisableEverywherePanel", false)
-    property bool disableBackground: readConfig("DisableBackground", true)
-
+    property bool windowPreviews: plasmoid.readConfig("WindowPreviews")
+    property int windowPreviewsOffsetX: plasmoid.readConfig("WindowPreviewsOffsetX")
+    property int windowPreviewsOffsetY: plasmoid.readConfig("WindowPreviewsOffsetY")
+    property int fontRelevance: plasmoid.readConfig("FontRelevance")
+    property bool showStoppedPanel: plasmoid.readConfig("ShowStoppedPanel")
+    property bool firstRunTour: plasmoid.readConfig("FirstRunTour")
+    property bool firstRunCalibration: plasmoid.readConfig("FirstRunCalibration")
+    property bool hideOnClick: plasmoid.readConfig("HideOnClick")
+    property bool useCurrentActivityIcon: plasmoid.readConfig("UseCurrentActivityIcon")
+    property bool disableEverywherePanel: plasmoid.readConfig("DisableEverywherePanel")
+    property bool disableBackground: plasmoid.readConfig("DisableBackground")
+    property bool triggerKWinScript: plasmoid.readConfig("TriggerKWinScript")
 
     // Small hack to make sure the global settings object is set
     property bool setAsGlobal: false
@@ -45,6 +45,7 @@ QtObject {
     onUseCurrentActivityIconChanged: { writeConfig("UseCurrentActivityIcon", useCurrentActivityIcon) ; }
     onDisableEverywherePanelChanged: { writeConfig("DisableEverywherePanel", disableEverywherePanel) ; }
     onDisableBackgroundChanged: { writeConfig("DisableBackground", disableBackground) ; }
+    onTriggerKWinScriptChanged: { plasmoid.writeConfig("TriggerKWinScript", triggerKWinScript) ;}
    */
 
     function configChanged() {
@@ -53,6 +54,7 @@ QtObject {
         useCurrentActivityIcon = readConfig("UseCurrentActivityIcon", false);
         disableEverywherePanel = readConfig("DisableEverywherePanel", false);
         disableBackground = readConfig("DisableBackground", false);
+        triggerKWinScript = plasmoid.readConfig("TriggerKWinScript")
     }
 
     Component.onCompleted: {
