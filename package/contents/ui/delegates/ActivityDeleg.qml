@@ -120,8 +120,11 @@ Item{
 
             onClickedOverrideSignal: {
                 if(!inDragging){
-                    if (!Settings.global.lockActivities)
-                        workflowManager.activityManager().chooseIcon(ccode);
+                    if (!Settings.global.lockActivities){
+                     //   disable changing icon because kwin script can not show the KIconDialog
+                     //   sessionParameters.triggerKWinScript();
+                     //   workflowManager.activityManager().chooseIcon(ccode);
+                    }
                     else{
                         workflowManager.activityManager().setCurrent(ccode);
                     }
