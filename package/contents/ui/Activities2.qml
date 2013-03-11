@@ -285,10 +285,10 @@ Item {
         y: screenY
         mainItem: mainDialogItem
 
-        onVisibleChanged: {
+      //  onVisibleChanged: {
          //   if (visible)
           //      workspace.slotToggleShowDesktop(); //it disables live previews in normal previews setting
-        }
+      //  }
     }
 
     // toggle complete dashboard
