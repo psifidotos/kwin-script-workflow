@@ -54,7 +54,7 @@ QtObject {
         useCurrentActivityIcon = readConfig("UseCurrentActivityIcon", false);
         disableEverywherePanel = readConfig("DisableEverywherePanel", false);
         disableBackground = readConfig("DisableBackground", false);
-        triggerKWinScript = readConfig("TriggerKWinScript")
+        triggerKWinScript = readConfig("TriggerKWinScript", true);
     }
 
     Component.onCompleted: {

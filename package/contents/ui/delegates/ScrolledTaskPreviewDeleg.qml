@@ -228,7 +228,7 @@ Item{
 
     ////////////////Functionality///////////////////////
     function onClicked(){
-        desktopDialog.clickedCancel();
+        uiConnect.desktopDialog.clickedCancel();
     }
 
     function onDraggingStarted(mouse, obj) {

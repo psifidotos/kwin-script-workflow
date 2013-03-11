@@ -437,7 +437,7 @@ Item{
 
     function onClicked(mouse) {
         taskManager.activateTask(taskDeleg2.ccode);
-        dialog.visible = false;
+        mainView.toggleBoth();
     }
 
     ////////////////////// Dragging support///////////////////////////////////

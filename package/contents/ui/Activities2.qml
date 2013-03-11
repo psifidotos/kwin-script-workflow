@@ -127,12 +127,12 @@ Item {
         height: mainView.height
         state: "hidden"
         opacity: 0
-     //   opacity: 1
+        //   opacity: 1
 
-     //   property alias opacityG: mainDialogItem.opacity
+        //   property alias opacityG: mainDialogItem.opacity
 
 
-   /*     onOpacityGChanged: {
+        /*     onOpacityGChanged: {
             //mainDialogItem.opacity = opacityG;
            // if(opacityG>0)
            //     workspace.slotToggleShowDesktop();
@@ -285,9 +285,9 @@ Item {
         y: screenY
         mainItem: mainDialogItem
 
-      //  onVisibleChanged: {
-         //   if (visible)
-          //      workspace.slotToggleShowDesktop(); //it disables live previews in normal previews setting
+     //   onVisibleChanged: {
+            //   if (visible)
+          //  workspace.slotToggleShowDesktop(); //it disables live previews in normal previews setting
       //  }
     }
 
@@ -296,7 +296,7 @@ Item {
         //if(dialog.visible === true) {
         if(mainDialogItem.state === "shown" ){
             mainDialogItem.state = "hidden";
-           // dialog.visible = false;
+            // dialog.visible = false;
         } else {
             var screen = workspace.clientArea(KWin.ScreenArea, workspace.activeScreen, workspace.currentDesktop);
             mainView.screenWidth = screen.width;
@@ -310,7 +310,7 @@ Item {
             // Activate Window and text field
             dialog.activateWindow();
             mainView.forceActiveFocus();
-           // dialog.visible = true;
+            // dialog.visible = true;
             mainDialogItem.state = "shown";
         }
 
