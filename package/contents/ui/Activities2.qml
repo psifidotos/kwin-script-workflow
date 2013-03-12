@@ -50,8 +50,6 @@ Item {
     //Applications properties/////
     property bool disablePreviewsWasForcedInDesktopDialog:false //as a reference to DesktopDialog because it is dynamic from now one
 
-    property QtObject mainClient
-
     WorkFlowComponents.SessionParameters {
         id: sessionParameters
         objectName:"sessionParameters"
@@ -327,11 +325,6 @@ Item {
         mainView.screenHeight = screen.height;
         mainView.screenX = screen.x;
         mainView.screenY = screen.y;
-
-        /*Set client for the dialog*/
-        mainClient = workspace.getClient(dialog.windowId);
-        /*****************/
-
 
         registerScreenEdge(KWin.ElectricTopLeft, function () {
             toggleBoth();
