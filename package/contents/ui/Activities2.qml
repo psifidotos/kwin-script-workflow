@@ -230,6 +230,15 @@ Item {
                 Component.onCompleted: value = Settings.global.scale;
             }
 
+            //Create a consistent look underTitleMainView
+            Rectangle {
+                id: actImagBackTitle
+                width: oxygenT.width
+                height: oxygenT.height
+                color: "#646464"
+                anchors.top:oxygenT.top
+            }
+
             TitleMainView{
                 id:oxygenT
             }
