@@ -289,23 +289,31 @@ Item {
         visible: false
         windowFlags: Qt.Popup | Qt.X11BypassWindowManagerHint
 
-        x: screenX + 1
-        y: screenY
+     //   x: screenX + 1
+     //   y: screenY
+        x:0
+        y:0
         mainItem: mainDialogItem
 
-     //   onVisibleChanged: {
-            //   if (visible)
-          //  workspace.slotToggleShowDesktop(); //it disables live previews in normal previews setting
-      //  }
+        //when hidden from lostFocus must update the item state
+        onVisibleChanged:{
+            if( (!visible) && (mainDialogItem.state !== "hidden") ){
+                workspace.slotToggleShowDesktop(); //it disables live previews in normal previews setting
+                mainDialogItem.state = "hidden";
+            }
+        }
     }
 
     // toggle complete dashboard
-    function toggleBoth() {
-        //if(dialog.visible === true) {
+    function toggleBoth() {        
         if(mainDialogItem.state === "shown" ){
+            //BE CAREFUL, do not change this order because it creates a crash
+            //from asynchronous calling two times slotToggleShowDesktops()
+            //the second time is onVisibleChange in the dialog
             mainDialogItem.state = "hidden";
-            // dialog.visible = false;
+            workspace.slotToggleShowDesktop();
         } else {
+            workspace.slotToggleShowDesktop();
             var screen = workspace.clientArea(KWin.ScreenArea, workspace.activeScreen, workspace.currentDesktop);
             mainView.screenWidth = screen.width;
             mainView.screenHeight = screen.height;
@@ -318,7 +326,7 @@ Item {
             // Activate Window and text field
             dialog.activateWindow();
             mainView.forceActiveFocus();
-            // dialog.visible = true;
+
             mainDialogItem.state = "shown";
         }
 
