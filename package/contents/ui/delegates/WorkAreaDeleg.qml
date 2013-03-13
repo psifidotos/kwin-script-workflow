@@ -111,7 +111,10 @@ Item{
                 }
 
                 onClicked: {
-                    mainWorkArea.clickedWorkarea();
+                    if(keyNavigation.metaActive)
+                        mainWorkArea.clickedWorkarea(true);
+                    else
+                        mainWorkArea.clickedWorkarea(false);
                 }
 
             }//image mousearea
@@ -372,7 +375,7 @@ Item{
                 if(key==="Pause")
                     workflowManager.activityManager().stop(actCode);
                 else
-                    clickedWorkarea();
+                    clickedWorkarea(false);
             }
         }
     }
@@ -381,9 +384,10 @@ Item{
         return tasksSList;
     }
 
-    function clickedWorkarea(){
+    function clickedWorkarea(meta){
         workflowManager.activityManager().setCurrentActivityAndDesktop(mainWorkArea.actCode,mainWorkArea.desktop);
-        mainView.toggleBoth();
+        if(!meta)
+            mainView.toggleBoth();
     }
 
     function getBorderRectangle(){

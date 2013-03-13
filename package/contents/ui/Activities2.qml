@@ -298,7 +298,7 @@ Item {
         //when hidden from lostFocus must update the item state
         onVisibleChanged:{
             if( (!visible) && (mainDialogItem.state !== "hidden") ){
-                workspace.slotToggleShowDesktop(); //it disables live previews in normal previews setting
+    //Disable            workspace.slotToggleShowDesktop(); //it disables live previews in normal previews setting
                 mainDialogItem.state = "hidden";
             }
         }
@@ -311,9 +311,9 @@ Item {
             //from asynchronous calling two times slotToggleShowDesktops()
             //the second time is onVisibleChange in the dialog
             mainDialogItem.state = "hidden";
-            workspace.slotToggleShowDesktop();
+   //Disable         workspace.slotToggleShowDesktop();
         } else {
-            workspace.slotToggleShowDesktop();
+   //Disable         workspace.slotToggleShowDesktop();
             var screen = workspace.clientArea(KWin.ScreenArea, workspace.activeScreen, workspace.currentDesktop);
             mainView.screenWidth = screen.width;
             mainView.screenHeight = screen.height;
