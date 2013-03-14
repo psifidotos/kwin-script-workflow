@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import "../code/settings.js" as Settings
+import org.kde.qtextracomponents 0.1
 
 QtObject {
     property bool lockActivities: readConfig("LockActivities", true)
@@ -28,7 +29,7 @@ QtObject {
         if (setAsGlobal) 
             Settings.global = settings
     }
-    
+
  /*   onLockActivitiesChanged: { writeConfig("LockActivities", lockActivities); }
     onShowWindowsChanged: { writeConfig("ShowWindows", showWindows) ; }
     onScaleChanged: { writeConfig("Scale", scale) ; }
