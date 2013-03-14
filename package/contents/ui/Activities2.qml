@@ -298,8 +298,12 @@ Item {
         //when hidden from lostFocus must update the item state
         onVisibleChanged:{
             if( (!visible) && (mainDialogItem.state !== "hidden") ){
-    //Disable            workspace.slotToggleShowDesktop(); //it disables live previews in normal previews setting
                 mainDialogItem.state = "hidden";
+            }
+            else if ( (visible)&&(!Settings.global.disableEverywherePanel) ){
+                //fixes bug not showing some previews when first showing from Everywhere windows
+                    Settings.global.disableEverywherePanel = true;
+                    Settings.global.disableEverywherePanel = false;
             }
         }
     }
