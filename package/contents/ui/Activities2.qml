@@ -348,9 +348,9 @@ Item {
         mainView.screenX = screen.x;
         mainView.screenY = screen.y;
 
-        registerScreenEdge(KWin.ElectricTopLeft, function () {
+     /*   registerScreenEdge(KWin.ElectricTopLeft, function () {
             toggleBoth();
-        });
+        });*/
 
         // register dashboard shortcut
         registerShortcut("WorkFlow: KWin Script", "", "Meta+Ctrl+Z", function() {
