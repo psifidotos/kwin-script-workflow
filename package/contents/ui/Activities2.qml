@@ -329,7 +329,7 @@ Item {
 
             // Activate Window and text field
             dialog.activateWindow();
-            mainView.forceActiveFocus();
+        //    mainView.forceActiveFocus();
 
             mainDialogItem.state = "shown";
         }
