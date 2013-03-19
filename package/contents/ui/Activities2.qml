@@ -287,7 +287,8 @@ Item {
     PlasmaCore.Dialog {
         id: dialog
         visible: false
-        windowFlags: Qt.Popup | Qt.X11BypassWindowManagerHint
+        //windowFlags: Qt.Popup | Qt.X11BypassWindowManagerHint
+          windowFlags: Qt.Popup
 
      //   x: screenX + 1
      //   y: screenY
@@ -328,8 +329,9 @@ Item {
             //     dialog.y = screenY+1;
 
             // Activate Window and text field
-            dialog.activateWindow();
-        //    mainView.forceActiveFocus();
+            // it doesnt need to be added
+            // dialog.activateWindow();
+            // mainView.forceActiveFocus();
 
             mainDialogItem.state = "shown";
         }
