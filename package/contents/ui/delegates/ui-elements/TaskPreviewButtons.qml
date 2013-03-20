@@ -35,7 +35,7 @@ Item {
         tooltipText: i18n("Close this window.")
 
         onClicked: {
-            taskManager.removeTask(taskDeleg2.ccode);
+            kwinConnections.closeWindow(taskDeleg2.ccode);
         }
     }
 

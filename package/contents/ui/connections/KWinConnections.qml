@@ -18,7 +18,6 @@ Item{
         }
 
         onClientRemoved:{
-            console.log(client.windowId);
             taskManager.windowRemovedSlot(client.windowId);
         }
     }
@@ -32,6 +31,14 @@ Item{
                             taskManager.windowChangedSlot(client.windowId);
                         }
                         )
+        }
+    }
+
+    function closeWindow(winId){
+        var client = workspace.getClient(winId);
+
+        if(client !== null){
+            client.closeWindow();
         }
     }
 }

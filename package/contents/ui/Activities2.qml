@@ -70,6 +70,11 @@ Item {
 
     QMLPluginsConnections{}
 
+    //KWin Connections
+    KWinConnections{
+        id:kwinConnections
+    }
+
     //This a temporary solution to fix the issue with filtering windows
     //in empty fitter text in many cases windows are not shown correctly
     //so i reset the filter text to something not found and then again
