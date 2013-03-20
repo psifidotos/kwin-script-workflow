@@ -10,6 +10,10 @@ Item{
     WorkareaManagerConnections{}
     TaskManagerConnections{}
 
+
+    //KWin Connections
+    KWinConnections{}
+
   //  PreviewManagerConnections{}
   //  PlasmoidWrapperConnections{}
 }
