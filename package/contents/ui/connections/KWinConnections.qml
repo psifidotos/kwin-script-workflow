@@ -31,6 +31,11 @@ Item{
                             taskManager.windowChangedSlot(client.windowId);
                         }
                         )
+            client.captionChanged.connect(
+                        function(){
+                            taskManager.windowChangedSlot(client.windowId);
+                        }
+                        )
         }
     }
 
