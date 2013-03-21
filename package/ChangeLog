@@ -1,0 +1,13 @@
+(based on differences from the WorkFlow plasmoid)
+
+0.4.0
+=====
+-- added two buttons on the right, one for configuration and one for closing the script 
+-- added TopLeft hot corner to enable the script and a global shortcut also Meta+Ctrl+Z
+-- added an inline configuration dialog in order to set some settings (the settings
+      can not be stored yet so they are per kwin session)
+-- changed previews workaround and used default previews from kwin, this way exiting
+      use cases appear... e.g. when scrolling previews in the Workarea Dialog the previews
+      are croped
+-- changed/added tweaks in order for all the features to be supported also with the kwin script
+
