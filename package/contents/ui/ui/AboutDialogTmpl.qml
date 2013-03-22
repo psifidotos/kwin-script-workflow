@@ -62,7 +62,7 @@ DialogTemplate2{
 
         AnimatedText{
             id:versionText
-            fullText:i18n("KWin Script Version:")+" <i>"+"0.3.97"+"</i>"
+            fullText:i18n("KWin Script Version:")+" <i>"+mainView.version+"</i>"
 
             font.pixelSize: smallFont
             font.bold: true
