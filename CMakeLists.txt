@@ -2,11 +2,12 @@
 project(kwin_script_workflow)
 
 #set(NAME workflow)
-#set(VERSION 0.3.0)
+#set(VERSION 0.4.0)
 #set(AUTHOR "Michail Vourlakos")
 #set(EMAIL "psifidotos@users.sf.net")
 #set(WEBSITE "http://workflow.opentoolsandspace.org/")
 #set(ICON "preferences-activities")
+
 
 # Find the required Libaries
 find_package(KDE4 REQUIRED)
