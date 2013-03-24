@@ -1,4 +1,9 @@
 (based on differences from the WorkFlow plasmoid)
+0.4.1
+=====
+-- fixed version in metadata.desktop file
+-- merge from 0.4.1 plasmoid version which fixes incompatibility with
+   Plasma Desktop 4.9
 
 0.4.0
 =====

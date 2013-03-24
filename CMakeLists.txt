@@ -8,7 +8,6 @@ project(kwin_script_workflow)
 #set(WEBSITE "http://workflow.opentoolsandspace.org/")
 #set(ICON "preferences-activities")
 
-
 # Find the required Libaries
 find_package(KDE4 REQUIRED)
 
