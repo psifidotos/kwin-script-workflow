@@ -30,7 +30,7 @@ Item {
     property int screenX: 0
     property int screenY: 0
 
-    property string version: "0.4.0"
+    property string version: "0.4.1"
 
     width: screenWidth-paddingWidth
     height: screenHeight
