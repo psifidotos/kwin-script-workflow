@@ -14,7 +14,6 @@ import "helptour"
 import "connections"
 import "components"
 import "interfaces"
-
 import "ui"
 
 import "DynamicAnimations.js" as DynamAnim
@@ -58,8 +57,13 @@ Item {
         objectName:"sessionParameters"
     }
 
-    WorkFlowComponents.WorkflowManager {
-        id: workflowManager
+    WorkFlowComponents.PlasmoidWrapper {
+        id: plasmoidWrapper
+
+        onIsInPanelChanged:{
+            if (!isInPanel && mainLoader.status == Loader.Null)
+                mainLoader.source = "views/View1.qml";
+        }
     }
 
     WorkFlowComponents.TaskManager {
@@ -75,55 +79,6 @@ Item {
     //KWin Connections
     KWinConnections{
         id:kwinConnections
-    }
-
-    //This a temporary solution to fix the issue with filtering windows
-    //in empty fitter text in many cases windows are not shown correctly
-    //so i reset the filter text to something not found and then again
-    //to show all windows
-    Connections{
-        target:filterWindows
-        onTextChanged:{
-         //   console.log(filterWindows.text);
-            if(filterWindows.text === ""){
-                filteredTasksModel.fixBugString = "'''";
-                timerBug.start();
-            }
-        }
-    }
-
-    Timer {
-        id:timerBug
-        interval: 50; running: false; repeat: false
-        onTriggered: filteredTasksModel.fixBugString = "";
-    }
-
-    ///end fix of bug
-
-    PlasmaCore.SortFilterModel {
-        id:filteredTasksModel
-        filterRole: "name"
-        filterRegExp:".*" + mergedString + ".*"
-        sourceModel: taskManager.model()
-
-        //for fix of bug
-        property string mergedString: filterWindows.text.toLowerCase() + fixBugString
-        property string fixBugString: ""
-        //end of fix
-    }
-
-    PlasmaCore.SortFilterModel {
-        id:stoppedActivitiesModel
-        filterRole: "CState"
-        filterRegExp: "Stopped"
-        sourceModel: workflowManager.model()
-    }
-
-    PlasmaCore.SortFilterModel {
-        id:runningActivitiesModel
-        filterRole: "CState"
-        filterRegExp: "Running"
-        sourceModel: workflowManager.model()
     }
 
     /*Main Interface */
@@ -186,70 +141,24 @@ Item {
             }
         ]
 
-        Item{
-            id:centralArea
-            anchors.fill: parent
 
-            property string typeId: "centralArea"
 
-            WorkAreasAllLists{
-                id: allWorkareas
-
-                y:oxygenT.height
-                width:(mAddActivityBtn.showRedCross) ? mainDialogItem.width-mAddActivityBtn.width : mainDialogItem.width
-                height:mainView.height - y
-                verticalScrollBarLocation: stoppedPanel.x
-                clip:true
-
-                workareaWidth: mainView.workareaWidth
-                workareaHeight: mainView.workareaHeight
-                scale: mainView.scaleMeter
-                animationsStep: Settings.global.animationStep
-                /*  Rectangle{ //Debug Rectangle
-                    opacity:0.3
-                    color:"blue"
-                    z:100
-                    anchors.fill: parent
-                }*/
-            }
-
-            StoppedActivitiesPanel{
-                id:stoppedPanel
-            }
-
-            MainAddActivityButton{
-                id: mAddActivityBtn
-            }
-
-            AllActivitiesTasks{
-                id:allActT
-            }
-
-            ZoomSliderItem{
-                id:zoomSlider
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 7
-                anchors.right: parent.right
-                anchors.rightMargin: 7
-
-                onValueChanged: Settings.global.scale = value;
-
-                Component.onCompleted: value = Settings.global.scale;
-            }
-
-            //Create a consistent look underTitleMainView
-            Rectangle {
-                id: actImagBackTitle
-                width: oxygenT.width
-                height: oxygenT.height
-                color: "#646464"
-                anchors.top:oxygenT.top
-            }
-
-            TitleMainView{
-                id:oxygenT
-            }
+        Loader{
+            id:mainLoader
+            anchors.fill:parent
         }
+
+        ZoomSliderItem{
+            id:zoomSlider
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            z:10
+
+            onValueChanged: Settings.global.scale = value;
+
+            Component.onCompleted: value = Settings.global.scale;
+        }
+
 
         FilterWindows{
             id:filterWindows
@@ -295,10 +204,10 @@ Item {
         id: dialog
         visible: false
         //windowFlags: Qt.Popup | Qt.X11BypassWindowManagerHint
-          windowFlags: Qt.Popup
+        windowFlags: Qt.Popup
 
-     //   x: screenX + 1
-     //   y: screenY
+        //   x: screenX + 1
+        //   y: screenY
         x:0
         y:0
         mainItem: mainDialogItem
@@ -310,22 +219,26 @@ Item {
             }
             else if ( (visible)&&(!Settings.global.disableEverywherePanel) ){
                 //fixes bug not showing some previews when first showing from Everywhere windows
-                    Settings.global.disableEverywherePanel = true;
-                    Settings.global.disableEverywherePanel = false;
+                Settings.global.disableEverywherePanel = true;
+                Settings.global.disableEverywherePanel = false;
             }
+
+            if((visible)&&(mainLoader.status == Loader.Null))
+                mainLoader.source = "views/View1.qml";
         }
     }
 
     // toggle complete dashboard
-    function toggleBoth() {        
+    function toggleBoth() {
         if(mainDialogItem.state === "shown" ){
             //BE CAREFUL, do not change this order because it creates a crash
             //from asynchronous calling two times slotToggleShowDesktops()
             //the second time is onVisibleChange in the dialog
             mainDialogItem.state = "hidden";
-   //Disable         workspace.slotToggleShowDesktop();
+            //Disable         workspace.slotToggleShowDesktop();
         } else {
-   //Disable         workspace.slotToggleShowDesktop();
+            //Disable         workspace.slotToggleShowDesktop();
+
             var screen = workspace.clientArea(KWin.ScreenArea, workspace.activeScreen, workspace.currentDesktop);
             mainView.screenWidth = screen.width;
             mainView.screenHeight = screen.height;
@@ -357,7 +270,7 @@ Item {
         mainView.screenX = screen.x;
         mainView.screenY = screen.y;
 
-     /*   registerScreenEdge(KWin.ElectricTopLeft, function () {
+        /*   registerScreenEdge(KWin.ElectricTopLeft, function () {
             toggleBoth();
         });*/
 
